@@ -1,12 +1,72 @@
-import React from 'react';
-import './Hero.css'
-import { Carousel } from './Carousel/Carousel';
+import React from "react";
+import "./Hero.css";
+import { Carousel } from "./Carousel/Carousel";
+import RightSidePane from "./RightSidePane";
+import { CatalogItem } from "./CatalogItem";
 
 export const Hero = () => {
+  const images = [
+    "/pic1.jpg",
+    "/pic2.jpg",
+    "/pic3.jpg",
+    "/pic4.jpg",
+    "/pic5.jpg",
+  ];
   return (
     <div className="hero">
-        <Carousel/>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit debitis ipsum sed quod adipisci fugit inventore neque nobis molestiae, similique aliquid laboriosam cupiditate maxime accusantium vitae soluta, sapiente eius? Itaque tempora dignissimos facere mollitia magni aliquid necessitatibus placeat est ducimus. Amet eius atque officiis. Minima tenetur consequuntur rem placeat nobis quasi error assumenda doloribus cumque amet atque eligendi, officiis repellendus ab alias delectus aut ratione enim! Tenetur tempora architecto saepe exercitationem iste non rerum doloribus minima dignissimos velit sed voluptates, quo officiis a deserunt fugiat facilis placeat illo explicabo? Quae cum id, magnam consequuntur culpa quaerat illo laborum esse in iusto eaque voluptas harum beatae ea explicabo architecto molestias animi nihil natus! Laudantium magnam officia quia nisi minima inventore explicabo sapiente esse sint ipsum cumque exercitationem quo ad cum dolores molestiae debitis nobis, veniam excepturi at magni illum accusantium soluta officiis. Optio, soluta nobis. Ipsa ut repellat eum, esse alias quod, nobis molestiae quam similique velit minus ad et aspernatur id rem fugiat illum reiciendis deleniti delectus quia quos suscipit omnis cum doloribus. Omnis reiciendis expedita rem architecto? Temporibus ad sint laboriosam veritatis unde est facilis earum, neque sunt dolor minima blanditiis quibusdam velit architecto, voluptates laborum vero expedita. Voluptatum, earum labore beatae eius nihil, nulla similique ullam expedita quod ad dolorem qui sed, reprehenderit soluta. Iure excepturi distinctio totam fuga reiciendis voluptatibus eveniet, quam, voluptate quos aut, atque nam in reprehenderit mollitia? Expedita dolorum consequatur minima tempore quasi, vero impedit sequi minus velit, est ex doloremque. Voluptatum qui esse ab molestiae iusto quis odio nesciunt perspiciatis sed corrupti facilis alias, aperiam temporibus inventore nam consequatur. Ad autem explicabo at voluptates maiores porro atque a cupiditate tenetur, similique quidem deleniti impedit vitae quaerat officia voluptas veritatis praesentium earum tempore ea eaque totam! Sed aspernatur non illo perspiciatis quae. Consequuntur sed dolorem suscipit nemo. Neque, illo quasi. Reprehenderit natus excepturi nisi enim debitis architecto atque, consectetur culpa perspiciatis iure ipsum tenetur earum deserunt voluptatum blanditiis repudiandae incidunt aut ad itaque. Veritatis nulla officia consequatur tempora saepe quaerat inventore consectetur natus ut necessitatibus magni ducimus consequuntur, aliquid similique mollitia quos! Veritatis sequi eius cumque ullam ipsa qui ex, repellat facilis deleniti mollitia non iure molestias sunt fuga nostrum assumenda accusantium. Optio odit repellendus, doloribus accusamus neque amet, nesciunt natus sit, dolore iure at explicabo facilis. Tenetur iure consequuntur a unde et reprehenderit reiciendis molestias totam quod praesentium voluptatem autem, nemo aliquid vel molestiae? Amet dolorem consequatur perspiciatis totam, excepturi soluta. Iste voluptatibus libero fugit molestias nemo? Quia libero aperiam inventore eos cumque minus dolor natus et blanditiis possimus, nam assumenda numquam in voluptatum id aliquam laboriosam neque, quasi saepe facere aut dicta nesciunt? Commodi eos eveniet quam consequatur assumenda voluptas eligendi amet suscipit at necessitatibus. Quisquam quos quia debitis a sequi excepturi est impedit accusamus dignissimos numquam incidunt, eum reiciendis fugiat nihil. Cupiditate tenetur, blanditiis accusamus enim ipsa cumque provident? Delectus laudantium id officiis corporis ipsa impedit, quia, quidem sunt, rem soluta atque pariatur voluptas dolores? Deleniti dolor, ad eaque error ut pariatur fugit dolorum at accusantium corporis saepe magnam molestiae? Repudiandae fuga incidunt distinctio quisquam, ducimus expedita unde quia accusantium hic aliquam natus nam nostrum, est, ex labore saepe veritatis minus at voluptatem! Odio minus laborum quia corporis dicta asperiores qui laboriosam velit incidunt, repudiandae blanditiis, saepe deleniti similique tenetur harum est, sapiente provident facere non dolor ratione earum? Voluptatum minima, hic architecto maxime dolorem corrupti error nisi numquam vero ipsum repellendus quae cumque unde itaque nobis consequuntur. Magni velit delectus obcaecati hic? Praesentium, fugit totam! Est, architecto voluptates? Dolores et cumque exercitationem atque obcaecati, nesciunt non molestiae quos veniam quasi impedit hic amet tempora dolorem maiores neque saepe sed. Dolorem, deleniti? Alias repellendus vero non qui perferendis eaque pariatur, est sunt, laboriosam minus fugit ab eum obcaecati aut fuga veniam sed doloremque! A nihil vero aut dolore nostrum veniam sit, cum esse, voluptatum accusamus voluptatibus perspiciatis doloremque sapiente fugit voluptas! Quidem nemo nam ad nostrum enim veniam labore praesentium aut voluptatibus, laboriosam animi iure ullam corporis qui, aspernatur soluta perspiciatis possimus nobis. Quam, nobis dolores? Dolor neque sed odit dolorem est quos vel, eum culpa suscipit enim vitae saepe odio fugiat, sint excepturi debitis sapiente porro deserunt, laudantium nulla? Ab omnis laborum blanditiis illum provident architecto quos dolorem nemo aliquam! Necessitatibus officiis eos id animi libero, illo provident eligendi cupiditate in repellendus ipsum quia illum quis quas possimus corrupti rem impedit odio ut velit atque ea molestias deserunt voluptas. Mollitia modi ipsum similique cumque explicabo hic dignissimos aliquid earum, neque eos voluptatibus impedit nihil delectus corporis consequuntur eum, eligendi culpa corrupti sed veritatis sint iusto voluptas! Eius provident eum, assumenda corporis laudantium consectetur non at numquam minus itaque quasi tenetur ut eveniet facere harum enim nulla? Tempore, iusto quae quisquam harum hic nulla veniam? Numquam suscipit eligendi cupiditate, optio ullam quam ut nisi sapiente impedit fugiat, odio et voluptatum aut laborum voluptates itaque quae architecto. Eligendi laboriosam libero eveniet velit quisquam maxime exercitationem, totam iusto doloremque esse, ipsum voluptates sunt id veritatis quae animi odio voluptate repudiandae doloribus voluptatibus! Quia iusto perferendis, et deleniti rem doloremque fuga quos repellendus nisi aliquam qui, veniam dolorem. Ab, iusto. Numquam, nostrum itaque assumenda asperiores tempore culpa natus aliquam voluptas ipsum laboriosam eveniet accusamus dolore magni maiores, distinctio tempora illum nihil voluptatum. A itaque facere eius ipsa. Eius, repudiandae cumque sed velit vel ratione quas ad obcaecati odio tempora eum totam excepturi quibusdam dolor sunt illo quasi possimus nobis aliquam. Hic amet nam rerum adipisci! Provident sapiente pariatur in ratione nemo, nulla autem repellendus! Eos corrupti fugit aspernatur officia sapiente, rerum nulla, pariatur voluptatibus amet repudiandae, earum ea iure. Consequatur, iure iusto. Accusamus, atque animi sint rerum reprehenderit natus provident soluta explicabo nihil temporibus perferendis nostrum, est rem ipsum numquam iusto! Aliquam modi perspiciatis, consequatur, ipsa vel magnam nemo porro doloremque esse minima cum earum expedita? Eligendi neque enim laboriosam dolor totam fugit facilis earum corporis nihil officiis aut assumenda vero nobis quisquam ullam adipisci voluptates a eveniet eum suscipit, ad sunt saepe! Ad.
+      <div className="hero-hero">
+        <Carousel />
+        <RightSidePane />
+      </div>
+      <div className="catalog">
+        <p className="catolog-head">
+          Popular Games{" "}
+          <span>
+            <button className="catalog-seeAll">See All {`>`}</button>
+          </span>
+        </p>
+        <div className="catalog-grid">
+          <div className="catalog-item">
+            <img
+              className="catalog-item-img"
+              src=".\carousel-img\pic1.jpg"
+              alt="Game banner"
+            />
+            <div className="catalog-item-head">
+              <div className="catalog-item-head-left">
+                <p className="catalog-item-head-left-head">
+                  Amazing Spider Man
+                </p>
+                <p className="catalog-tags">
+                  <span className="catalog-tag">Action</span>
+                  <span className="catalog-tag">Shooting</span>
+                </p>
+              </div>
+              <div className="catalog-item-head-right">
+                <img className="catalog-icon" src="./icons/icon1.jpeg" alt="" />
+              </div>
+            </div>
+            <div className="catalog-item-end">
+              <div className="catalog-item-rating">
+                <div className="rating-left"><div className="rating-icon">
+                  <img style={{height: "75%", width: "75%"}} src="./rating.svg" alt="Rating icon" />
+                  </div></div>
+                <div className="rating-right">
+                <div className="rating-head">Rating</div>
+                <div className="rating-value">98%</div>
+                </div>
+              </div>
+              <div className="catalog-item-play">Play Now</div>
+            </div>
+          </div>
+          
+          {images.map((item, key)=>(<CatalogItem ImgURL={item} name={"Amazing Spider Man"} tags={["Action","Shooter"]} iconURL={"icon1.jpeg"}/>))}
+          {images.map((item, key)=>(<CatalogItem ImgURL={item} name={"Amazing Spider Man"} tags={["Action","Shooter"]} iconURL={"icon1.jpeg"}/>))}
+
+          
+        </div>
+      </div>
+      
     </div>
-  )
-}
+  );
+};

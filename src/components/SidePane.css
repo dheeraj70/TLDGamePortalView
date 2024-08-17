@@ -9,8 +9,8 @@
   overflow-y: auto;
   overflow-x: hidden;
   transition: left 0.05s linear;
-  border-top-right-radius: 30px;
-  border-bottom-right-radius: 30px;
+  border-top-right-radius: 40px;
+  border-bottom-right-radius: 40px;
   color: white;
   padding-top: 15px;
   padding-bottom: 15px;

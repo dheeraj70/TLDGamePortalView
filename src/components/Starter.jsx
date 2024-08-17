@@ -11,6 +11,7 @@ export const Starter = () => {
       
         <SidePane/>
         <Hero/>
+        
     </div>
   )
 }
