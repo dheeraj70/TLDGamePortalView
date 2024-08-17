@@ -1,0 +1,21 @@
+.start{
+    display: flex;
+}
+.side-collapse{
+    position: absolute;  
+    top: 110px;
+    z-index: 1;
+    left :20px;
+    
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    border: 2px solid rgb(29, 0, 63);
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(29, 0, 63);
+    background-color: blue;
+}
