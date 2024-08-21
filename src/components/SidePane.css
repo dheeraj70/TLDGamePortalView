@@ -1,11 +1,11 @@
 .side-pane {
   height: calc(100% - 140px);
-  margin-top: 20px;
+  
   margin-bottom: 20px;
   width: 17%;
   background-color: #2c2b57;
   position: fixed;
-  top: 100px;
+  top: 120px;
   overflow-y: auto;
   overflow-x: hidden;
   transition: left 0.05s linear;
@@ -46,11 +46,15 @@
     cursor: pointer;
     direction: ltr;
     padding-left: 5%;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    align-items: center;
+    font-family: "Jost", sans-serif;
 }
 .pane-icon{
     
-    width: 30%;
-    font-size: 22px;
+    width: 17%;
+    
     display: flex;
     justify-content: center;
     align-items: center;
@@ -61,14 +65,15 @@
     display: flex;
     justify-content: left;
     align-items: center;
-    font-size: 21px;
+    font-size: 23px;
     transition: all 0.05s linear;
-    left: 0px;
+    left: 10px;
     bottom: 0px;
+    color: white;
 }
 .pane-item:hover > .pane-name{
     position: relative;
-    left: 10px;
+    left: 20px;
     color: rgb(147, 123, 175);
 }
 .pane-hr{

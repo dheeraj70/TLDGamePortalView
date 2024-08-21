@@ -12,8 +12,8 @@ export const Nav = () => {
             <i className="fa-solid fa-magnifying-glass nav-search-icon"></i>
         </div>
         <div className="nav-right">
-        <button className='nav-notification'><i class="fa-solid fa-user-group"></i></button>
-        <button className='nav-notification'><i class="fa-solid fa-bell"></i></button>
+        <button className='nav-notification'><i className="fa-solid fa-user-group"></i></button>
+        <button className='nav-notification'><i className="fa-solid fa-bell"></i></button>
         <button className='nav-login'> Login </button>
         </div>
     </nav>

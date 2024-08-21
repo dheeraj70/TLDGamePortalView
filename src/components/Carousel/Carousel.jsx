@@ -40,7 +40,7 @@ export const Carousel = () => {
         onClick={leftCaroBtn}
         className="carousel-left-btn"
       >
-        <i class="fa-solid fa-arrow-left"></i>
+        <i className="fa-solid fa-arrow-left"></i>
       </button>
       <button
         type="button"
@@ -48,16 +48,16 @@ export const Carousel = () => {
         onClick={rightCaroBtn}
         className="carousel-right-btn"
       >
-        <i class="fa-solid fa-arrow-right"></i>
+        <i className="fa-solid fa-arrow-right"></i>
       </button>
       <div className="carousel-dots">
         {images.map((img, index) => {
           return (
             <div key={index} onClick={()=>{setImgIndex(index)}} style={{ display: "inline-block", cursor: "pointer" }}>
               {index === imgIndex ? (
-                <i class="fa-solid fa-circle-dot"></i>
+                <i className="fa-solid fa-circle-dot"></i>
               ) : (
-                <i class="fa-solid fa-circle"></i>
+                <i className="fa-solid fa-circle"></i>
               )}
             </div>
           );

@@ -1,5 +1,6 @@
 .nav-bar{
     display: flex;
+    top:0px;
     height: 100px;
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);

@@ -1,5 +1,5 @@
 import React from 'react'
-import './Starter.css';
+
 export default function RightSidePane() {
   return (
     <div className="right-side-pane">
