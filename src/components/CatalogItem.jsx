@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export const CatalogItem = ({ gameID, ImgURL, name, tags, iconURL ,likes, dislikes}) => {
+export const CatalogItem = ({ gameID, ImgURL, name, tags ,likes, dislikes}) => {
   return (
     <div className="catalog-item">
       <img
@@ -20,13 +20,7 @@ export const CatalogItem = ({ gameID, ImgURL, name, tags, iconURL ,likes, dislik
             )))}
           </p>
         </div>
-        <div className="catalog-item-head-right">
-          <img
-            className="catalog-icon"
-            src={`/icons/${iconURL}`}
-            alt="Game Icon"
-          />
-        </div>
+        
       </div>
       <div className="catalog-item-end">
         <div className="catalog-item-rating">
@@ -44,7 +38,7 @@ export const CatalogItem = ({ gameID, ImgURL, name, tags, iconURL ,likes, dislik
             <div className="rating-value">{Math.floor(likes/(likes+dislikes)*100)} %</div>
           </div>
         </div>
-        <Link className="catalog-item-play-link" to={`/game/${gameID}`} state={{name, tags, likes, dislikes, gameID }}>
+        <Link className="catalog-item-play-link" to={`/game/${gameID}`} state={{name, tags, likes, dislikes, gameID}}>
           <button className="catalog-item-play">Play Now</button>
         </Link>
       </div>

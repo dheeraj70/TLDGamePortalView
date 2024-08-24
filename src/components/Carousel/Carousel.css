@@ -49,3 +49,30 @@
     color: rgba(255, 255, 255, 0.8);
     text-shadow: 2px 2px 3px black;
 }
+
+@media screen and (max-width: 480px) {
+   
+    .carousel{
+        width: 90%;
+        
+        aspect-ratio: 2.3;
+        overflow: hidden;
+        position: relative;
+        border-radius: 40px;
+        z-index: 0;
+    }
+}
+
+@media screen and (min-width: 480px) 
+    and (max-width: 1024px) {
+        .carousel{
+            width: 90%;
+            
+            aspect-ratio: 2.3;
+            overflow: hidden;
+            position: relative;
+            border-radius: 40px;
+            z-index: 0;
+        }
+    
+}

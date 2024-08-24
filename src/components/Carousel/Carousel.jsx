@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Carousel.css";
 export const Carousel = () => {
   const [imgIndex, setImgIndex] = useState(0);
@@ -19,6 +19,15 @@ export const Carousel = () => {
     "/pic4.jpg",
     "/pic5.jpg",
   ];
+
+  useEffect(()=>{
+    const AutoPlay = setInterval(() => {
+      leftCaroBtn();
+    }, 2000);
+
+    
+    return () => clearInterval(AutoPlay);
+  },[leftCaroBtn]);
   return (
     <section className="carousel">
       <div

@@ -1,29 +1,68 @@
 import React, { useEffect, useState } from "react";
 import "./Game.css";
-import { useParams, Link, useLocation } from "react-router-dom";
+import { useParams,  useLocation } from "react-router-dom";
 import { SidePane } from "./SidePane";
+import { Catalog } from "./Catalog";
+import { Wrapper } from "./Wrapper";
 
 export const Game = () => {
   const location = useLocation();
-  const { name, tags, likes, dislikes } = location.state || {};
+  let { name, tags, likes, dislikes, like_count, dislike_count} = location.state || {};
   const {gameID} = useParams();
-  const [gameDescURL, setGameDescURL] = useState(null);
+  const [gameDesc, setGameDesc] = useState(null);
+  const [fullScreen, setFullScreen] = useState(false);
   //console.log(gameID);
 
-  const getGameDescURL = async (gameID)=>{
+  const getGameDesc = async (gameID)=>{
     try{
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/gameDescURL/${gameID}`);
-    const gameDescURL = await res.json();
-    console.log(gameDescURL);
-    setGameDescURL(gameDescURL);
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/gameDesc/${gameID}`);
+    const gameDesc = await res.json();
+    //console.log(gameDesc);
+    setGameDesc(gameDesc);
   }catch(err){
     console.log(err);
   }
   }
+
+  const getAllGameData = async (gameID)=>{
+    try{
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/games/${gameID}`);
+    const gameDesc = await res.json();
+    //console.log(gameDesc);
+    setGameDesc(gameDesc);
+  }catch(err){
+    console.log(err);
+  }
+  }
+  useEffect(() => {
+    if (fullScreen) {
+      // Disable scrolling
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Enable scrolling
+      document.body.style.overflow = '';
+    }
+    
+    // Cleanup to reset scrolling when component is unmounted
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [fullScreen]);
   useEffect(()=>{
-    getGameDescURL(gameID);
-  },[]);
-  if(gameDescURL === null){ return <h1>Loading</h1>}
+    if(location.state){
+      getGameDesc(gameID);
+    }else{
+      getAllGameData(gameID);
+    }
+    window.scrollTo(0, 0);
+    
+  },[gameID,location.state]);
+
+  if (!location.state && gameDesc) {
+    ({ name, tags, likes, dislikes, like_count, dislike_count} = gameDesc);
+  }
+
+  if(gameDesc === null){ return <h1>Loading</h1>}
   return (
     
     <>
@@ -39,23 +78,29 @@ export const Game = () => {
           <div className="game">
             {/* Added img temporaryly, iframe to be put in its place */}
             
-            <iframe style={{ height: "100%", width: "100%" ,borderTopLeftRadius: '20px',borderTopRightRadius: '20px'}} src={gameDescURL.iframe_url} frameBorder="0"></iframe>
+            <Wrapper gameID={gameID} fullScreen={fullScreen} setFullScreen={setFullScreen}/>
           </div>
           <div className="game-fullscreen-controls">
-          <button className="fullscreen-btn">Full Screen</button>
+          <button onClick={()=>{ setFullScreen(!fullScreen)}} className="fullscreen-btn">Full Screen <i className="fa-solid fa-expand"></i></button>
         </div>
         </div>
         
         <div className="game-desc">
-          <h1 className="game-desc-head">{name}</h1>
+          <h1 className="game-desc-head">{name}<p className="catalog-game-tags">
+            {(tags!=null)&&(tags.map((tag, key) => (
+              <span key={key} className="catalog-game-tag">
+                {tag}
+              </span>
+            )))}
+          </p></h1>
           <div className="game-desc-btns">
             <button className="game-desc-btn">
               {" "}
-              {likes} <i className="fa-solid fa-thumbs-up"></i>
+              {likes || like_count || '0'} <i className="fa-solid fa-thumbs-up"></i>
             </button>
             <button className="game-desc-btn">
               {" "}
-              {dislikes} <i className="fa-solid fa-thumbs-down"></i>
+              {dislikes || dislike_count|| '0'} <i className="fa-solid fa-thumbs-down"></i>
             </button>
             <button className="game-desc-btn">
               {" "}
@@ -64,16 +109,18 @@ export const Game = () => {
 
             <div className="game-desc-nobtn">
               {" "}
-              Rating {Math.floor(likes/(likes + dislikes)*100)}% <i className="fa-solid fa-heart"></i>
+              Rating {(Math.floor((likes || like_count)/((likes || like_count) + (dislikes || dislike_count))*100))||'0'}% <i className="fa-solid fa-heart"></i>
             </div>
           </div>
           <hr />
           <p>
-            {gameDescURL.description}
+            {gameDesc.description}
           </p>
         </div>
         <div className="game-desc game-more">
-          
+        {(tags!=null)&&(tags.map((tag, key) => (
+              <Catalog key={key} category={false} name={tag} />
+            )))}
         </div>
       </div>
     </>

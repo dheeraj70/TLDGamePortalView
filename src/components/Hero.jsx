@@ -22,12 +22,14 @@ export const Hero = () => {
         <div className="catalog-grid">
 
           
-          {images.map((item, key)=>(<CatalogItem key ={key} ImgURL={item} name={"Amazing Spider Man"} tags={["Action","Shooter"]} iconURL={"icon1.jpeg"}/>))}
+          {images.map((item, key)=>(<CatalogItem key ={key} ImgURL={item} name={"Amazing Spider Man"} tags={["Action","Shooter"]} />))}
 
           
         </div>
       </div>*/}
-      <Catalog category={false} name={'Popular Games'} games={'[1,2,3,4]'} category_hero_id={1}/>
+      <Catalog category={false} name={'Popular'} category_hero_id={1}/>
+      <Catalog category={false} name={'Action'} category_hero_id={2}/>
+      <Catalog category={false} name={'Shooter'} category_hero_id={3}/>
       
     </div>
   );

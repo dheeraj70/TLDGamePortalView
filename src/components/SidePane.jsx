@@ -1,18 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./SidePane.css";
 
-export const SidePane = ({ isInGame }) => {
+export const SidePane = ({ isInGame, menuFull, setMenuFull }) => {
   const navigate = useNavigate();
-
   const [categories, setCategories] = useState(null);
+  const sidePanel = useRef(null);
 
   useEffect(() => {
     getCategories().then((dat) => {
-      console.log(dat);
       setCategories(dat);
     });
-  }, []);
+
+    const handleClickOutside = (event) => {
+      if (
+        menuFull &&
+        sidePanel.current &&
+        !sidePanel.current.contains(event.target)
+      ) {
+        document.body.style.overflow = "";
+        setMenuFull(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, [menuFull, setMenuFull]);
 
   const getCategories = async () => {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/categories`);
@@ -21,11 +39,19 @@ export const SidePane = ({ isInGame }) => {
 
   return (
     <div
-      className="side-pane"
-      style={isInGame ? { top: "30px", height: "85%" } : {}}
+      ref={sidePanel}
+      className={`side-pane ${menuFull ? "side-pane-full" : ""}`}
+      style={{
+        top: isInGame ? "30px" : "",
+        height: isInGame ? "85%" : "",
+      }}
     >
       <button
         onClick={() => {
+          if (menuFull) {
+            document.body.style.overflow = "";
+            setMenuFull(false);
+          }
           navigate(`/`);
         }}
         className="pane-item"
@@ -46,7 +72,11 @@ export const SidePane = ({ isInGame }) => {
           return (
             <button
               onClick={() => {
-                navigate(`/categories/${category.CATEGORY_NAME}`,{ state: {categoryID: category.CATEGORY_ID} });
+                if (menuFull) {
+                  document.body.style.overflow = "";
+                  setMenuFull(false);
+                }
+                navigate(`/categories/${category.CATEGORY_NAME}`);
               }}
               key={key}
               className="pane-item"
@@ -55,7 +85,7 @@ export const SidePane = ({ isInGame }) => {
                 <img
                   className="pane-icon-img"
                   src={`/side-panel-icons/${category.SVG}.svg`}
-                  alt="Home"
+                  alt={category.CATEGORY_NAME}
                 />
               </div>
               <div className="pane-name">{category.CATEGORY_NAME}</div>
@@ -63,127 +93,6 @@ export const SidePane = ({ isInGame }) => {
           );
         })
       )}
-
-      {/*<div className="pane-item">
-          <div className="pane-icon">
-            <img
-              className="pane-icon-img"
-              src="/side-panel-icons/home.svg"
-              alt="Home"
-            />
-          </div>
-          <div className="pane-name">Homee</div>
-        </div><div className="pane-item">
-          <div className="pane-icon">
-          <img className='pane-icon-img' src="/side-panel-icons/fire.svg" alt="Action" />
-
-          </div>
-          <div className="pane-name">Trending</div>
-        </div>
-        <div className="pane-item">
-          <div className="pane-icon">
-          <img className='pane-icon-img' src="/side-panel-icons/stars.svg" alt="Action" />
-          </div>
-          <div className="pane-name">New</div>
-        </div>
- 
-        <div className="pane-item">
-          <div className="pane-icon">
-            <img
-              className="pane-icon-img"
-              src="/side-panel-icons/sword.svg"
-              alt="Action"
-            />
-          </div>
-          <div className="pane-name">Action</div>
-        </div>
-
-        <div className="pane-item">
-          <div className="pane-icon">
-            <img
-              className="pane-icon-img"
-              src="/side-panel-icons/people.svg"
-              alt="Action"
-            />
-          </div>
-          <div className="pane-name">2 Player</div>
-        </div>
-        <div className="pane-item">
-          <div className="pane-icon">
-            <img
-              className="pane-icon-img"
-              src="/side-panel-icons/compass.svg"
-              alt="Action"
-            />
-          </div>
-          <div className="pane-name">Adventure</div>
-        </div>
-        <div className="pane-item">
-          <div className="pane-icon">
-          <img className='pane-icon-img' src="/side-panel-icons/pacman.svg" alt="Action" />
-          </div>
-          <div className="pane-name">.io</div>
-        </div>
-        <div className="pane-item">
-          <div className="pane-icon">
-          <img className='pane-icon-img' src="/side-panel-icons/joystick.svg" alt="Action" />
-          </div>
-          <div className="pane-name">Casual</div>
-        </div>
-        <div className="pane-item">
-          <div className="pane-icon">
-          <img className='pane-icon-img' src="/side-panel-icons/multipeople.svg" alt="Action" />
-          </div>
-          <div className="pane-name">MultiPlayer</div>
-        </div>
-        <div className="pane-item">
-          <div className="pane-icon">
-          <img className='pane-icon-img' src="/side-panel-icons/shoot.svg" alt="Action" />
-          </div>
-          <div className="pane-name">Shooting</div>
-        </div>
-        <div className="pane-item">
-          <div className="pane-icon">
-          <img className='pane-icon-img' src="/side-panel-icons/sports.svg" alt="Action" />
-          </div>
-          <div className="pane-name">Sports</div>
-        </div>
-        <div className="pane-item">
-          <div className="pane-icon">
-          <img className='pane-icon-img' src="/side-panel-icons/girl.svg" alt="Action" />
-          </div>
-          <div className="pane-name">Girls</div>
-        </div>
-        <div className="pane-item">
-          <div className="pane-icon">
-          <img className='pane-icon-img' src="/side-panel-icons/minecraft.svg" alt="Action" />
-          </div>
-          <div className="pane-name">Vixel</div>
-        </div>
-        <div className="pane-item">
-          <div className="pane-icon">
-          <img className='pane-icon-img' src="/side-panel-icons/cards.svg" alt="Action" />
-          </div>
-          <div className="pane-name">Card</div>
-        </div>
-        <div className="pane-item">
-          <div className="pane-icon">
-            <i className="fa-solid fa-fire"></i>
-          </div>
-          <div className="pane-name">Card</div>
-        </div>
-        <div className="pane-item">
-          <div className="pane-icon">
-            <i className="fa-solid fa-fire"></i>
-          </div>
-          <div className="pane-name">Card</div>
-        </div>
-        <div className="pane-item">
-          <div className="pane-icon">
-            <i className="fa-solid fa-fire"></i>
-          </div>
-          <div className="pane-name">Card</div>
-        </div>*/}
     </div>
   );
 };
