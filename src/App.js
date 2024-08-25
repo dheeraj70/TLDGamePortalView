@@ -52,7 +52,7 @@ function App() {
 
   return (
     <>
-      <Nav menuFull={menuFull} setMenuFull={setMenuFull} />
+      <Nav menuFull={menuFull} setMenuFull={setMenuFull} isInstalled={!isInstalled && deferredPrompt} handleInstallClick={handleInstallClick}/>
 
       {!isInstalled && deferredPrompt && showPrompt && (
         <Prompt handleInstallClick={handleInstallClick} handleClose={handleClosePrompt} />
@@ -61,6 +61,8 @@ function App() {
         isInGame={false}
         menuFull={menuFull}
         setMenuFull={setMenuFull}
+        isInstalled={!isInstalled && deferredPrompt}
+        handleInstallClick={handleInstallClick}
       />
       <Outlet />
     </>

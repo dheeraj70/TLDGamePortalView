@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./SidePane.css";
 
-export const SidePane = ({ isInGame, menuFull, setMenuFull }) => {
+export const SidePane = ({ isInGame, menuFull, setMenuFull ,isInstalled, handleInstallClick}) => {
   const navigate = useNavigate();
   const [categories, setCategories] = useState(null);
   const sidePanel = useRef(null);
@@ -43,9 +43,15 @@ export const SidePane = ({ isInGame, menuFull, setMenuFull }) => {
       className={`side-pane ${menuFull ? "side-pane-full" : ""}`}
       style={{
         top: isInGame ? "30px" : "",
-        height: isInGame ? "85%" : "",
+        height: isInGame ? "calc(100% - 60px)" : "",
       }}
     >
+      {menuFull&&<div className="side-pane-down">
+        
+        <button className="side-pane-login">Login</button>
+
+        {isInstalled && <button onClick={handleInstallClick} className="side-pane-login">Install App</button>}
+        </div>}
       <button
         onClick={() => {
           if (menuFull) {
@@ -76,7 +82,7 @@ export const SidePane = ({ isInGame, menuFull, setMenuFull }) => {
                   document.body.style.overflow = "";
                   setMenuFull(false);
                 }
-                navigate(`/categories/${category.CATEGORY_NAME}`);
+                navigate(`/categories/${category.category_id}`);
               }}
               key={key}
               className="pane-item"
@@ -93,6 +99,7 @@ export const SidePane = ({ isInGame, menuFull, setMenuFull }) => {
           );
         })
       )}
+      
     </div>
   );
 };

@@ -3,36 +3,44 @@ import { useParams ,useNavigate} from "react-router-dom";
 import { CatalogItem } from "./CatalogItem";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-export const Catalog = ({ category_hero, name}) => {
+export const Catalog = ({ category_hero, category_hero_id}) => {
 
   
 
   const navigate = useNavigate();
   const params = useParams();
 
-  //the following code makes sure that categoryName is available!
-  let category = category_hero?params.category:name;
+  //the following code makes sure that category is available!
+  let category = category_hero?params.category_id:category_hero_id;
 
 
 
   const [catalog_games, setCatalog_games] = useState([]);
+  const [catName, setCatName] = useState(null);
   const [hasMore, setHasMore] = useState(true);
   const page = useRef(1);
  
 
   const fetchCategoryGames = async (category, page) => {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/category/games?category=${category}&page=${page}`);
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/category/games?category_id=${category}&page=${page}`);
+    const data = await res.json();
+    //console.log(data)
+    return data;
+  }
+
+  const getCategoryName = async (category, page) =>{
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/categoryname?category_id=${category}`);
     const data = await res.json();
     //console.log(data)
     return data;
   }
 
   useEffect(() => {
-    
+    getCategoryName(category).then(dat=>setCatName(dat[0].CATEGORY_NAME));
     fetchCategoryGames(category, page.current).then(games => {
       setCatalog_games(games);
     });
-  }, [category,category_hero, name]);
+  }, [category,category_hero]);
 
   const fetchMoreData = () => {
     
@@ -53,10 +61,10 @@ export const Catalog = ({ category_hero, name}) => {
   return (
     <div className={`catalog ${category_hero ? 'hero' : ''}`}>
       <p className="catolog-head">
-        {`${category} Games`}
+        {`${catName} Games`}
         {(!category_hero &&
           <span>
-            <button onClick={()=>{navigate(`/categories/${name}`)}} className="catalog-seeAll">See All {`>`}</button>
+            <button onClick={()=>{navigate(`/categories/${category}`)}} className="catalog-seeAll">See All {`>`}</button>
           </span>
         )}
       </p>

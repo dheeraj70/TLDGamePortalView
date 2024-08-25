@@ -27,9 +27,9 @@ export const Hero = () => {
           
         </div>
       </div>*/}
-      <Catalog category={false} name={'Popular'} category_hero_id={1}/>
-      <Catalog category={false} name={'Action'} category_hero_id={2}/>
-      <Catalog category={false} name={'Shooter'} category_hero_id={3}/>
+      <Catalog category={false} category_hero_id={1}/>
+      <Catalog category={false} category_hero_id={2}/>
+      <Catalog category={false} category_hero_id={3}/>
       
     </div>
   );

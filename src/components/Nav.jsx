@@ -1,7 +1,7 @@
 import React,{useRef} from "react";
 import "./Nav.css";
 
-export const Nav = ({menuFull, setMenuFull}) => {
+export const Nav = ({menuFull, setMenuFull, isInstalled, handleInstallClick}) => {
 
 
 
@@ -32,11 +32,12 @@ export const Nav = ({menuFull, setMenuFull}) => {
           <i className="fa-solid fa-magnifying-glass "></i>
         </button>
         <button className="nav-notification">
-          <i className="fa-solid fa-user-group"></i>
+          <i className="fa-solid fa-user"></i>
         </button>
         <button className="nav-notification">
           <i className="fa-solid fa-bell"></i>
         </button>
+        {isInstalled && <button onClick={handleInstallClick} className="nav-install"> Install App </button>}
         <button className="nav-login"> Login </button>
         
         <button

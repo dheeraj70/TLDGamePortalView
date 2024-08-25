@@ -20,7 +20,7 @@ const router = createBrowserRouter([
         element: <Hero />,
       },
       {
-        path:'categories/:category',
+        path:'categories/:category_id',
         element : <Catalog category_hero={true}/>
       }
       
