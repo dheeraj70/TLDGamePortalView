@@ -144,7 +144,7 @@
 
 .catalog-item-rating{
     background-color: #434277;
-    height: calc(100%-10px);
+    height: 100%;
     width: 40%;
     border-radius: 15px;
     display: flex;
@@ -158,6 +158,8 @@
 }
 .rating-right{
     width: 100%;
+    display: flex;
+    flex-direction: column;
 
 }
 .catalog-item-play{
@@ -230,6 +232,7 @@
         width: 90%;
         height: 200px;
         left: 0%;
+        display: none;
     }
     .catolog-head{
         padding-left: 20px;
@@ -270,7 +273,7 @@
         padding-bottom: 10px;
     }
     .rating-value{
-        font-size: 1.3rem;
+        font-size: 1.2rem;
     }
     .catalog-item-rating{
         width: 30%;
@@ -314,6 +317,7 @@
             width: 90%;
             height: 200px;
             left: 0%;
+            display: none;
         }
         .catolog-head{
             padding-left: 20px;
