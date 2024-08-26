@@ -18,10 +18,10 @@ export const Wrapper = ({ gameID, fullScreen, setFullScreen }) => {
   }, [fullScreen]);
 
   return (
-    <div className={fullScreen ? 'wrapperFull' : ''} style={{ height: '100%', width: '100%' }}>
+    <div style={{ height: '100%', width: '100%' }}>
       {fullScreen && (
         <button
-          onClick={() => setFullScreen(!fullScreen)}
+          onClick={() => {document.exitFullscreen();setFullScreen(!fullScreen)}}
           className="fullScreenBtn"
         >
           <i className="fa-solid fa-compress"></i>
@@ -30,11 +30,6 @@ export const Wrapper = ({ gameID, fullScreen, setFullScreen }) => {
       <iframe
         className="iframeInWrapper"
         title="wrapper"
-        style={{
-          borderTopLeftRadius: fullScreen ? '' : '20px',
-          borderTopRightRadius: fullScreen ? '' : '20px',
-          width: !fullScreen ? '100%' : ''
-        }}
         src={`${process.env.REACT_APP_API_URL}/play/${gameID}`}
         frameBorder="0"
       ></iframe>

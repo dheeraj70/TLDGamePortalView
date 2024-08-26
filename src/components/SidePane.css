@@ -114,6 +114,7 @@
       gap: 15px;
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
       direction: ltr;
+      transition: left 0.1s ease-in-out;
     }
     .pane-icon{
       width: 12%;
@@ -166,7 +167,7 @@
         font-size: 17px;
       }
       .side-pane-full {
-        left: 20% !important; 
+        left: 40% !important; 
       }
         .side-pane{
           width: 100%;
@@ -192,6 +193,7 @@
           gap: 15px;
           box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
           direction: ltr;
+          transition: left 0.1s ease-in-out;
         }
         .pane-icon{
           width: 12%;
@@ -215,7 +217,7 @@
       border-bottom-left-radius: 40px;
       height: 150px;
       position: fixed;
-      width: 80%;
+      width: 60%;
       z-index: 10;
       bottom: 0px;
       bottom: 0px;

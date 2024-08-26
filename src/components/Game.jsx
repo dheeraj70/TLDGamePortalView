@@ -30,17 +30,16 @@ export const Game = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-      })
-      if(res.ok){
+      });
+      if (res.ok) {
         setGameDesc(prevDesc => ({
           ...prevDesc,
           like_count: (prevDesc.like_count || 0) + 1
         }));
-          alert('Liked');
-      }else{
-       console.log('failed to update like!')
+        alert('Liked');
+      } else {
+        console.log('failed to update like!');
       }
-
     } catch (err) {
       console.error(err);
     }
@@ -54,14 +53,14 @@ export const Game = () => {
           'Content-Type': 'application/json',
         },
       });
-      if(res.ok){
+      if (res.ok) {
         setGameDesc(prevDesc => ({
           ...prevDesc,
           dislike_count: (prevDesc.dislike_count || 0) + 1
         }));
         alert('Disliked');
-      }else{
-       console.log('failed to update dislike!')
+      } else {
+        console.log('failed to update dislike!');
       }
     } catch (err) {
       console.error(err);
@@ -71,8 +70,7 @@ export const Game = () => {
   const getCatID = async (cat_name) => {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/categoryid?category_name=${cat_name}`);
     const data = await res.json();
-    //console.log(data);
-    return data[0].category_id; // Assuming the response structure
+    return data[0].category_id; 
   };
 
   const getAllGameData = async (gameID) => {
@@ -84,7 +82,7 @@ export const Game = () => {
       console.log(err);
     }
   };
-
+/*
   useEffect(() => {
     if (fullScreen) {
       document.body.style.overflow = "hidden";
@@ -96,7 +94,7 @@ export const Game = () => {
       document.body.style.overflow = "";
     };
   }, [fullScreen]);
-
+*/
   useEffect(() => {
     if (location.state) {
       getGameDesc(gameID);
@@ -107,10 +105,7 @@ export const Game = () => {
   }, [gameID, location.state]);
 
   useEffect(() => {
-    //console.log('out');
-    if(gameDesc){
-    if (gameDesc.tags) {
-      //console.log('in')
+    if (gameDesc && gameDesc.tags) {
       const fetchCategoryIDs = async () => {
         const ids = [];
         for (let tag of gameDesc.tags) {
@@ -120,8 +115,29 @@ export const Game = () => {
         setCategoryIDs(ids);
       };
       fetchCategoryIDs();
-    }}
+    }
   }, [gameDesc]);
+
+  const toggleFullScreen = () => {
+    const gameElement = document.querySelector('.game');
+    if (!document.fullscreenElement) {
+      if (gameElement.requestFullscreen) {
+        gameElement.requestFullscreen();
+      } else if (gameElement.mozRequestFullScreen) { // For Firefox
+        gameElement.mozRequestFullScreen();
+      } else if (gameElement.webkitRequestFullscreen) { // For Chrome, Safari and Opera
+        gameElement.webkitRequestFullscreen();
+      } else if (gameElement.msRequestFullscreen) { // For IE/Edge
+        gameElement.msRequestFullscreen();
+      }
+      setFullScreen(true);
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+      setFullScreen(false);
+    }
+  };
 
   if (!location.state && gameDesc) {
     ({ name, likes, dislikes, like_count, dislike_count } = gameDesc);
@@ -133,7 +149,7 @@ export const Game = () => {
 
   return (
     <>
-      <SidePane isInGame={true} />
+      {/*<SidePane isInGame={true} />*/}
 
       <div className="game-right-pane">
         <p className="game-right-head">Content</p>
@@ -146,7 +162,7 @@ export const Game = () => {
             <Wrapper gameID={gameID} fullScreen={fullScreen} setFullScreen={setFullScreen} />
           </div>
           <div className="game-fullscreen-controls">
-            <button onClick={() => setFullScreen(!fullScreen)} className="fullscreen-btn">
+            <button onClick={toggleFullScreen} className="fullscreen-btn">
               Full Screen <i className="fa-solid fa-expand"></i>
             </button>
           </div>
@@ -166,20 +182,16 @@ export const Game = () => {
           </h1>
           <div className="game-desc-btns">
             <button onClick={likeGame} className="game-desc-btn">
-              {" "}
               {likes || like_count || "0"} <i className="fa-solid fa-thumbs-up"></i>
             </button>
             <button onClick={dislikeGame} className="game-desc-btn">
-              {" "}
               {dislikes || dislike_count || "0"} <i className="fa-solid fa-thumbs-down"></i>
             </button>
             <button className="game-desc-btn">
-              {" "}
               Report <i className="fa-solid fa-flag"></i>
             </button>
 
             <div className="game-desc-nobtn">
-              {" "}
               Rating {(Math.floor((likes || like_count) / ((likes || like_count) + (dislikes || dislike_count)) * 100)) || "0"}%{" "}
               <i className="fa-solid fa-heart"></i>
             </div>

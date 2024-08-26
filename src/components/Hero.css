@@ -201,6 +201,20 @@
     font-weight: 600;
     font-size: 1.5rem;
 }
+.hero-loading{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    margin-top: 20px;
+}
+.hero-loading-img{
+    height: 100%;
+    aspect-ratio: 1/1;
+}
+.catalog-end-msg{
+    text-align: center;
+}
 
 @media screen and (max-width: 480px) {
     .hero{

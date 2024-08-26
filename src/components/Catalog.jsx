@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useState, useRef } from 'react';
 import { useParams ,useNavigate} from "react-router-dom";
 import { CatalogItem } from "./CatalogItem";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -36,10 +36,27 @@ export const Catalog = ({ category_hero, category_hero_id}) => {
     return data;
   }
 
+  function useFixMissingScroll({ hasMoreItems, fetchMoreItems }) {
+    const mainElement = useMemo(() => document.querySelector('.catalog'), [])
+  
+    const fetchCb = useCallback(() => {
+      fetchMoreItems()
+    }, [fetchMoreItems])
+  
+    useEffect(() => {
+      const hasScroll = mainElement ? mainElement.scrollHeight > mainElement.clientHeight : false
+      if (!hasScroll && hasMoreItems) {
+        setTimeout(() => {
+          fetchCb()
+        }, 100)
+      }
+    }, [hasMoreItems, fetchCb, mainElement])
+  }
+
   useEffect(() => {
     
     setIsLoading(true);
-
+    page.current=1;
     Promise.all([fetchCategoryGames(category, page.current), getCategoryName(category)])
       .then(([games, categoryName]) => {
         if (games.length === 0) {
@@ -69,7 +86,13 @@ export const Catalog = ({ category_hero, category_hero_id}) => {
     });
   };
 
-  if (isLoading) return (<div className='hero'>Loading</div>);
+  useFixMissingScroll({
+    hasMoreItems: hasMore,
+    fetchMoreItems: fetchMoreData
+  });
+  
+
+  if (isLoading) return (<div className='hero hero-loading'><img className='hero-loading-img' src="/loading.svg" alt="Loading" /></div>);
 
   return (
     
@@ -84,12 +107,13 @@ export const Catalog = ({ category_hero, category_hero_id}) => {
       </p>
 
       {/*Checks if category is true, then renders infinite scroll i.e when clicked through left-side-pane*/
-      category_hero?<InfiniteScroll
+      category_hero?
+      <InfiniteScroll
         dataLength={catalog_games.length} // This is important to keep track of the current length of the array
         next={fetchMoreData} // Function to call when reaching the end
         hasMore={hasMore} // Boolean to know if there's more data to load
-        loader={<h4>Loading...</h4>} // Loader for when data is being fetched
-        endMessage={<p>Thats all the folks!</p>}
+        loader={<div className='hero-loading'><img className='hero-loading-img' src="/loading.svg" alt="Loading" /></div>} // Loader for when data is being fetched
+        endMessage={<p className='catalog-end-msg'>That's all folks!</p>}
       >
         <div className="catalog-grid">
           {catalog_games.map((item, key) => (

@@ -22,14 +22,13 @@ const router = createBrowserRouter([
       {
         path:'categories/:category_id',
         element : <Catalog category_hero={true}/>
+      },
+      {
+        path: "/game/:gameID",
+            element: <Game />, 
       }
       
     ],
-  },{
-    path: "/game/:gameID",
-        element: <Game />,
-
-    
   }
 ]);
 
