@@ -3,7 +3,7 @@ import { useParams ,useNavigate} from "react-router-dom";
 import { CatalogItem } from "./CatalogItem";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-export const Catalog = ({ category_hero, category_hero_id, isIngame}) => {
+export const Catalog = ({ category_hero, category_hero_id, isIngame, onLoadingChange, heroLoading}) => {
 
   
 
@@ -68,6 +68,7 @@ export const Catalog = ({ category_hero, category_hero_id, isIngame}) => {
       })
       .finally(() => {
         setIsLoading(false); 
+        onLoadingChange(false);
       });
   }, [category]);
 
@@ -91,8 +92,14 @@ export const Catalog = ({ category_hero, category_hero_id, isIngame}) => {
     fetchMoreItems: fetchMoreData
   });
   
-
-  if (isLoading) return (<div className='hero hero-loading'><img className='hero-loading-img' src="/loading.svg" alt="Loading" /></div>);
+  
+  if (isLoading){
+    if(category_hero){
+      return (<div className='hero hero-loading'><img className='hero-loading-img' src="/loading.svg" alt="Loading" /></div>);
+    }else if(heroLoading){
+      return null;
+    }
+  }
 
   return (
     

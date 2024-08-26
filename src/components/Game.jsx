@@ -14,7 +14,29 @@ export const Game = () => {
   const [moreCat, setMoreCat]= useState(false);
   const likeBtn = useRef(null);
   const dislikeBtn = useRef(null);
-  
+
+  /* Logic for group loading fix*/
+  const [loadingStates, setLoadingStates] = useState([true]);
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    // Manually check if all elements in loadingStates are false
+    let allLoaded = true;
+    for (let i = 0; i < loadingStates.length; i++) {
+      if (loadingStates[i] === true) {
+        allLoaded = false;
+        break;
+      }
+    }
+    // Set isLoading based on whether all are loaded
+    setIsLoading(!allLoaded);
+  }, [loadingStates]);
+  const handleLoadingStateChange = (index, isLoading) => {
+    setLoadingStates(prevStates => {
+      const newStates = [...prevStates];
+      newStates[index] = isLoading;
+      return newStates;
+    });
+  };
 
   /*const getGameDesc = async (gameID) => {
     try {
@@ -123,7 +145,9 @@ export const Game = () => {
   useEffect(() => {
     
     getAllGameData(gameID);
-    
+    if(gameDesc){
+    setLoadingStates(Array(gameDesc.tags.length).fill(true));
+    }
     window.scrollTo(0, 0);
   }, [gameID]);
 
@@ -246,13 +270,15 @@ export const Game = () => {
         </div>
 
         <div className="game-desc game-more">
-          {gameDesc.tags != null &&
+       { isLoading &&<div style={{width: '100%', textAlign: 'center',marginTop: '30px'}}><img style={{height: '100px'}} className='hero-loading-img' src="/loading.svg" alt="Loading" /></div>}
+        {gameDesc.tags != null &&
             categoryIDs.map((categoryID, key) => (
               <Catalog
                 key={key}
                 category_hero={false}
                 category_hero_id={categoryID}
                 isIngame={true}
+                heroLoading={isLoading} onLoadingChange={isLoading => handleLoadingStateChange(key, isLoading)}
               />
             ))}
         </div>
