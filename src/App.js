@@ -10,23 +10,16 @@ function App() {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [isInstalled, setIsInstalled] = useState(false);
   const [showPrompt, setShowPrompt] = useState(true);
-  const [isPromptSupported, setIsPromptSupported] = useState(true); // Track prompt support
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (e) => {
-      if (!e) return; // Handle case where event is not provided
       console.log("beforeinstallprompt event fired"); // Add this line
       e.preventDefault();
       setDeferredPrompt(e);
       setShowPrompt(true); 
     };
   
-    if ('BeforeInstallPromptEvent' in window) {
-      // Check for beforeinstallprompt event support
-      window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
-    } else {
-      setIsPromptSupported(false); // No support for beforeinstallprompt
-    }
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
   
     window.addEventListener("appinstalled", () => {
       console.log("App installed"); // Add this line
@@ -36,12 +29,11 @@ function App() {
     });
   
     return () => {
-      if (isPromptSupported) {
-        window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
-      }
+      window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
     };
-  }, [isPromptSupported]);
+  }, []);
   
+
   const handleInstallClick = () => {
     if (deferredPrompt) {
       deferredPrompt.prompt();
@@ -63,21 +55,16 @@ function App() {
 
   return (
     <>
-      <Nav 
-        menuFull={menuFull} 
-        setMenuFull={setMenuFull} 
-        isNotInstalled={!isInstalled && (isPromptSupported ? deferredPrompt : true)} 
-        handleInstallClick={handleInstallClick}
-      />
+      <Nav menuFull={menuFull} setMenuFull={setMenuFull} isNotInstalled={!isInstalled && deferredPrompt} handleInstallClick={handleInstallClick}/>
 
-      {!isInstalled && (isPromptSupported ? deferredPrompt : true) && showPrompt && (
+      {!isInstalled && deferredPrompt && showPrompt && (
         <Prompt handleInstallClick={handleInstallClick} handleClose={handleClosePrompt} />
       )}
       <SidePane
         isInGame={false}
         menuFull={menuFull}
         setMenuFull={setMenuFull}
-        isNotInstalled={!isInstalled && (isPromptSupported ? deferredPrompt : true)}
+        isNotInstalled={!isInstalled && deferredPrompt}
         handleInstallClick={handleInstallClick}
       />
       <Outlet />
