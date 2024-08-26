@@ -72,7 +72,7 @@ export const SidePane = ({ isInGame, menuFull, setMenuFull ,isInstalled, handleI
         <div className="pane-name">Home</div>
       </button>
       {categories === null ? (
-        <div> Loading </div>
+        <img style={{height: '10%'}} className='hero-loading-img' src="/loading.svg" alt="Loading" />
       ) : (
         categories.map((category, key) => {
           return (

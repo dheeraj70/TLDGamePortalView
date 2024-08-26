@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useRef} from "react";
 import "./Game.css";
 import { useParams } from "react-router-dom";
-import { SidePane } from "./SidePane";
 import { Catalog } from "./Catalog";
 import { Wrapper } from "./Wrapper";
 
@@ -13,9 +12,11 @@ export const Game = () => {
   const [fullScreen, setFullScreen] = useState(false);
   const [categoryIDs, setCategoryIDs] = useState([]);
   const [moreCat, setMoreCat]= useState(false);
+  const likeBtn = useRef(null);
+  const dislikeBtn = useRef(null);
   
 
-  const getGameDesc = async (gameID) => {
+  /*const getGameDesc = async (gameID) => {
     try {
       const res = await fetch(
         `${process.env.REACT_APP_API_URL}/gameDesc/${gameID}`
@@ -25,7 +26,7 @@ export const Game = () => {
     } catch (err) {
       console.log(err);
     }
-  };
+  };*/
 
   const likeGame = async (event) => {
     try {
@@ -40,14 +41,14 @@ export const Game = () => {
       );
       if (res.ok) {
         //console.log("liked!");
-        event.target.classList.add('bounce');
+        likeBtn.current.classList.add('bounce');
         setGameDesc((prevDesc) => ({
           ...prevDesc,
           like_count: (prevDesc.like_count || 0) + 1,
         }));
         setTimeout(() => {
-          event.target.classList.remove('bounce');
-        }, 500);
+          likeBtn.current.classList.remove('bounce');
+        }, 200);
         //alert("Liked");
       } else {
         console.log("failed to update like!");
@@ -70,14 +71,14 @@ export const Game = () => {
       );
       if (res.ok) {
         //console.log("disliked!");
-        event.target.classList.add('bounce');
+        dislikeBtn.current.classList.add('bounce');
         setGameDesc((prevDesc) => ({
           ...prevDesc,
           dislike_count: (prevDesc.dislike_count || 0) + 1,
         }));
         setTimeout(() => {
-          event.target.classList.remove('bounce');
-        }, 500);
+          dislikeBtn.current.classList.remove('bounce');
+        }, 200);
         //alert("Disliked");
       } else {
         console.log("failed to update dislike!");
@@ -167,7 +168,7 @@ export const Game = () => {
   
 
   if (gameDesc === null) {
-    return <h1>Loading</h1>;
+    return <div className='hero hero-loading'><img className='hero-loading-img' src="/loading.svg" alt="Loading" /></div>;
   }
 
   return (
@@ -218,11 +219,11 @@ export const Game = () => {
             </p>
           </h1>
           <div className="game-desc-btns">
-            <button onClick={likeGame} className="game-desc-btn">
+            <button ref={likeBtn} onClick={likeGame} className="game-desc-btn">
               {gameDesc.like_count || "0"}{" "}
               <i className="fa-solid fa-thumbs-up"></i>
             </button>
-            <button onClick={dislikeGame} className="game-desc-btn">
+            <button ref={dislikeBtn} onClick={dislikeGame} className="game-desc-btn">
               {gameDesc.dislike_count || "0"}{" "}
               <i className="fa-solid fa-thumbs-down"></i>
             </button>

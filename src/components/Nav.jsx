@@ -1,9 +1,11 @@
-import React,{useRef} from "react";
+import React from "react";
+import { useNavigate} from "react-router-dom";
+
 import "./Nav.css";
 
 export const Nav = ({menuFull, setMenuFull, isInstalled, handleInstallClick}) => {
 
-
+  const navigate = useNavigate();
 
   const burgerPressed = () => {
     document.body.style.overflow = "hidden";
@@ -14,7 +16,7 @@ export const Nav = ({menuFull, setMenuFull, isInstalled, handleInstallClick}) =>
   return (
     <nav className="nav-bar">
       <div className="nav-left">
-        <img className="nav-logo" src="/logo.png" alt="TLD games" />
+        <img onClick={()=>{navigate('/')}} className="nav-logo" src="/logo.png" alt="TLD games" />
       </div>
       <div className="nav-middle">
         <input

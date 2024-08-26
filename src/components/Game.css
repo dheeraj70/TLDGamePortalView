@@ -30,6 +30,7 @@
   margin: 0px;
   font-size: 1.7rem;
   display: flex;
+  gap: 10px;
 }
 .game-desc-btns {
   display: flex;
