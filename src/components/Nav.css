@@ -118,8 +118,9 @@
     }
     .nav-right{
         width: 100%;
-        position: relative;
         padding-right: 15px;
+        gap: 0.7rem;
+        justify-content: right;
     }
     .nav-logo{
         width: 100px;

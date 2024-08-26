@@ -18,6 +18,7 @@ export const Catalog = ({ category_hero, category_hero_id}) => {
   const [catalog_games, setCatalog_games] = useState([]);
   const [catName, setCatName] = useState(null);
   const [hasMore, setHasMore] = useState(true);
+  const[isLoading, setIsLoading] = useState(true);
   const page = useRef(1);
  
 
@@ -36,11 +37,22 @@ export const Catalog = ({ category_hero, category_hero_id}) => {
   }
 
   useEffect(() => {
-    getCategoryName(category).then(dat=>setCatName(dat[0].CATEGORY_NAME));
-    fetchCategoryGames(category, page.current).then(games => {
-      setCatalog_games(games);
-    });
-  }, [category,category_hero]);
+    
+    setIsLoading(true);
+
+    Promise.all([fetchCategoryGames(category, page.current), getCategoryName(category)])
+      .then(([games, categoryName]) => {
+        if (games.length === 0) {
+          navigate('/404'); 
+          return;
+        }
+        setCatalog_games(games);
+        setCatName(categoryName[0].CATEGORY_NAME);
+      })
+      .finally(() => {
+        setIsLoading(false); 
+      });
+  }, [category]);
 
   const fetchMoreData = () => {
     
@@ -53,18 +65,20 @@ export const Catalog = ({ category_hero, category_hero_id}) => {
       }
 
       setCatalog_games(prevGames => [...prevGames, ...newGames]);
+      setIsLoading(false);
     });
   };
 
-  if (catalog_games.length === 0) return (<div>Loading</div>);
+  if (isLoading) return (<div className='hero'>Loading</div>);
 
   return (
+    
     <div className={`catalog ${category_hero ? 'hero' : ''}`}>
       <p className="catolog-head">
         {`${catName} Games`}
         {(!category_hero &&
           <span>
-            <button onClick={()=>{navigate(`/categories/${category}`)}} className="catalog-seeAll">See All {`>`}</button>
+            <button title='See more' onClick={()=>{navigate(`/categories/${category}`)}} className="catalog-seeAll">See All {`>`}</button>
           </span>
         )}
       </p>
