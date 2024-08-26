@@ -18,7 +18,7 @@ export const Wrapper = ({ gameID, fullScreen, setFullScreen }) => {
   }, [fullScreen]);
 
   return (
-    <div style={{ height: '100%', width: '100%' }}>
+    <div style={{ height: '100%', width: '100%' ,borderTopLeftRadius: fullScreen?'0px':'20px',borderTopRightRadius: fullScreen?'0px':'20px', overflow:'hidden'}}>
       {fullScreen && (
         <button
           onClick={() => {document.exitFullscreen();setFullScreen(!fullScreen)}}

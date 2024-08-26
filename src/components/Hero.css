@@ -89,32 +89,81 @@
     grid-gap: 15px;
     justify-content: center;
 }
+.catalog-grid-ingame{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 0.33fr));
+    grid-auto-rows: 340px;
+    grid-gap: 15px;
+    justify-content: space-evenly;
+}
 .catalog-item{
     background-color: #2c2b57;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 40px;
-    padding: 15px 10px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
-    gap: 3%;
+    gap: 2%;
     cursor: pointer;
+    border: none;
+    overflow: hidden;
 }
 .catalog-item-img{
-    height: 52%;
+    height: 70%;
     aspect-ratio: 2.35;
     border-radius: 30px;
     object-fit:cover;
+    width: 100%;
 }
 .catalog-item-head{
     display: flex;
     position: relative;
-    height: 21%;
+    height: 15%;
+}
+.catalog-item-end-div{
+    display: flex;
+    height:13%;
+    width: 100%;
 }
 .catalog-item-end{
     display: flex;
-    height:20%;
-    justify-content: space-between;
-    gap: 7px;
+    height: 100%;
+    background-color: #2c2b57;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    /*width: 84%;*/
+    border-radius: 20px;
+    overflow: hidden;
+    flex-grow: 6;
+}
+.rating-head{
+    height: 100%;
+    margin: 0;
+    text-align: left;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    /*width: 16%;*/
+    color: white;
+    flex-grow: 0.2;
+    flex-shrink: 0;
+}
+.catalog-item-progress{
+    height: 100%;
+    width: 0%;
+    background-color: rgb(51, 228, 228);
+    box-shadow: inset 2px 7px 20px rgba(0, 0, 0, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.progress-rating{
+    color: white;
+    text-shadow: 2px 2px 3px #000000;
+    font-family: "Jost", sans-serif;
+    font-size: 20px;
+    margin: 0;
+    display: inline-block;
+    padding-left: 10px;
 }
 .catalog-item-head-left{
     color: white;
@@ -126,9 +175,13 @@
 .catalog-item-head-left-head{
     margin: 0px;
     font-size: 1.4rem;
+    text-align: left;
 }
 .catalog-tags{
     margin: 0px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
 }
 .catalog-tag{
     background-color: #434277;
@@ -140,67 +193,21 @@
     border-radius: 12px;
     font-size: 15px;
 }
-
-
-.catalog-item-rating{
-    background-color: #434277;
-    height: 100%;
-    width: 40%;
-    border-radius: 15px;
+.catalog-tag-rem{
+    margin-right: 7px;
+    font-size: 15px;
     display: flex;
-    gap: 5px;
-}
-.rating-left{
-    width: 100%;
-    margin-left: 5px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-.rating-right{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-
-}
-.catalog-item-play{
-    background-color: rgb(59, 82, 255);
-    width: 100%;
-    height: 100%;
-    text-decoration: none;
-    border-radius: 15px;
-    color: white;
-    font-size: 21px;
-    display: flex;
-    justify-content: center;
     align-items: center;
     cursor: pointer;
-    border: none;
-    font-family: "Jost", sans-serif;
+}
 
-}
-.catalog-item-play-link{
-    width: 60%;
-    height: 100%;
-    text-decoration: none;
 
-}
-.rating-icon{
-    background-color: #93d33e;
-    border-radius: 15px;
-    height: 100%;
-    aspect-ratio: 1/1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.rating-head{
-    color: white;
-}
-.rating-value{
-    color: white;
-    font-weight: 600;
-    font-size: 1.5rem;
-}
+
+
+
+
+
+
 .hero-loading{
     display: flex;
     justify-content: center;
@@ -250,8 +257,13 @@
     }
     .catolog-head{
         padding-left: 20px;
+        margin-top: 0rem;
     }
     .catalog-grid{
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    .catalog-grid-ingame{
         grid-template-columns: 1fr;
         gap: 15px;
     }
@@ -259,52 +271,116 @@
         background-color: #2c2b57;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         border-radius: 0px;
-        padding: 0px 0px;
+        padding: 0px;
+        padding-bottom: 10px;
         display: flex;
         flex-direction: column;
-        gap: 1%;
+        gap: 2%;
         cursor: pointer;
+        border: none;
+        overflow: hidden;
+        
     }
     .catalog-item-img{
-        width: 100%;
+        height: 70%;
+        aspect-ratio: none;
         border-radius: 0px;
         object-fit:cover;
+        width: 100%;
     }
     .catalog-item-head{
         display: flex;
         position: relative;
-        height: 22%;
-        padding-left: 15px;
-        padding-right: 15px;
+        height: 15%;
+        padding-left: 10px;
+    }
+    .catalog-item-end-div{
+        display: flex;
+        height:13%;
+        width: calc(100% - 20px);
+        padding-left: 10px;
+        padding-right: 10px;
     }
     .catalog-item-end{
         display: flex;
-        height:17%;
-        justify-content: space-between;
-        gap: 7px;
+        height: 100%;
+        background-color: #2c2b57;
+        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        /*width: 84%;*/
+        border-radius: 20px;
+        overflow: hidden;
+        
+    }
+    .rating-head{
+        height: 100%;
+        margin: 0;
+        text-align: left;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        /*width: 16%;*/
+        color: white;
+        
+        flex-shrink: 0;
+    }
+    .catalog-item-progress{
+        height: 100%;
+        width: 0%;
+        background-color: rgb(51, 228, 228);
+        box-shadow: inset 2px 7px 20px rgba(0, 0, 0, 1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .progress-rating{
+        color: white;
+        text-shadow: 2px 2px 3px #000000;
+        font-family: "Jost", sans-serif;
+        font-size: 20px;
+        margin: 0;
+        display: inline-block;
         padding-left: 10px;
+    }
+    .catalog-item-head-left{
+        color: white;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+    }
+    .catalog-item-head-left-head{
+        margin: 0px;
+        font-size: 1.4rem;
+        text-align: left;
+    }
+    .catalog-tags{
+        margin: 0px;
+        display: flex;
+        justify-content: left;
+    }
+    .catalog-tag{
+        background-color: #434277;
+        margin-right: 7px;
+        padding-left: 10px;
+        margin-left: -5px;
         padding-right: 10px;
-        padding-bottom: 10px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        border-radius: 12px;
+        font-size: 15px;
     }
-    .rating-value{
-        font-size: 1.2rem;
-    }
-    .catalog-item-rating{
-        width: 30%;
-    }
-    .catalog-item-play-link{
-        width: 70%;
-    }
-    .catolog-head{
-        margin-top: 0rem;
+    .catalog-tag-rem{
+        margin-right: 7px;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        
     }
 
 }
 @media screen and (min-width: 480px) 
     and (max-width: 1024px) {
-        .rating-value{
-            font-size: 1.4rem;
-        }
+        
         .hero{
             width: 100%;
             background-color: #27274d;

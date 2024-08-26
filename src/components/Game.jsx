@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from "react";
 import "./Game.css";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { SidePane } from "./SidePane";
 import { Catalog } from "./Catalog";
 import { Wrapper } from "./Wrapper";
 
 export const Game = () => {
-  const location = useLocation();
-  let { name, likes, dislikes, like_count, dislike_count } = location.state || {};
+  
+  
   const { gameID } = useParams();
   const [gameDesc, setGameDesc] = useState(null);
   const [fullScreen, setFullScreen] = useState(false);
   const [categoryIDs, setCategoryIDs] = useState([]);
+  const [moreCat, setMoreCat]= useState(false);
+  
 
   const getGameDesc = async (gameID) => {
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/gameDesc/${gameID}`);
+      const res = await fetch(
+        `${process.env.REACT_APP_API_URL}/gameDesc/${gameID}`
+      );
       const gameDesc = await res.json();
       setGameDesc(gameDesc);
     } catch (err) {
@@ -23,44 +27,60 @@ export const Game = () => {
     }
   };
 
-  const likeGame = async () => {
+  const likeGame = async (event) => {
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/likeGame/${gameID}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const res = await fetch(
+        `${process.env.REACT_APP_API_URL}/likeGame/${gameID}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       if (res.ok) {
-        setGameDesc(prevDesc => ({
+        //console.log("liked!");
+        event.target.classList.add('bounce');
+        setGameDesc((prevDesc) => ({
           ...prevDesc,
-          like_count: (prevDesc.like_count || 0) + 1
+          like_count: (prevDesc.like_count || 0) + 1,
         }));
-        alert('Liked');
+        setTimeout(() => {
+          event.target.classList.remove('bounce');
+        }, 500);
+        //alert("Liked");
       } else {
-        console.log('failed to update like!');
+        console.log("failed to update like!");
       }
     } catch (err) {
       console.error(err);
     }
   };
 
-  const dislikeGame = async () => {
+  const dislikeGame = async (event) => {
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/dislikeGame/${gameID}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const res = await fetch(
+        `${process.env.REACT_APP_API_URL}/dislikeGame/${gameID}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       if (res.ok) {
-        setGameDesc(prevDesc => ({
+        //console.log("disliked!");
+        event.target.classList.add('bounce');
+        setGameDesc((prevDesc) => ({
           ...prevDesc,
-          dislike_count: (prevDesc.dislike_count || 0) + 1
+          dislike_count: (prevDesc.dislike_count || 0) + 1,
         }));
-        alert('Disliked');
+        setTimeout(() => {
+          event.target.classList.remove('bounce');
+        }, 500);
+        //alert("Disliked");
       } else {
-        console.log('failed to update dislike!');
+        console.log("failed to update dislike!");
       }
     } catch (err) {
       console.error(err);
@@ -68,21 +88,25 @@ export const Game = () => {
   };
 
   const getCatID = async (cat_name) => {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/categoryid?category_name=${cat_name}`);
+    const res = await fetch(
+      `${process.env.REACT_APP_API_URL}/categoryid?category_name=${cat_name}`
+    );
     const data = await res.json();
-    return data[0].category_id; 
+    return data[0].category_id;
   };
 
   const getAllGameData = async (gameID) => {
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/games/${gameID}`);
+      const res = await fetch(
+        `${process.env.REACT_APP_API_URL}/games/${gameID}`
+      );
       const gameDesc = await res.json();
       setGameDesc(gameDesc);
     } catch (err) {
       console.log(err);
     }
   };
-/*
+  /*
   useEffect(() => {
     if (fullScreen) {
       document.body.style.overflow = "hidden";
@@ -96,13 +120,11 @@ export const Game = () => {
   }, [fullScreen]);
 */
   useEffect(() => {
-    if (location.state) {
-      getGameDesc(gameID);
-    } else {
-      getAllGameData(gameID);
-    }
+    
+    getAllGameData(gameID);
+    
     window.scrollTo(0, 0);
-  }, [gameID, location.state]);
+  }, [gameID]);
 
   useEffect(() => {
     if (gameDesc && gameDesc.tags) {
@@ -119,15 +141,18 @@ export const Game = () => {
   }, [gameDesc]);
 
   const toggleFullScreen = () => {
-    const gameElement = document.querySelector('.game');
+    const gameElement = document.querySelector(".game");
     if (!document.fullscreenElement) {
       if (gameElement.requestFullscreen) {
         gameElement.requestFullscreen();
-      } else if (gameElement.mozRequestFullScreen) { // For Firefox
+      } else if (gameElement.mozRequestFullScreen) {
+        // For Firefox
         gameElement.mozRequestFullScreen();
-      } else if (gameElement.webkitRequestFullscreen) { // For Chrome, Safari and Opera
+      } else if (gameElement.webkitRequestFullscreen) {
+        // For Chrome, Safari and Opera
         gameElement.webkitRequestFullscreen();
-      } else if (gameElement.msRequestFullscreen) { // For IE/Edge
+      } else if (gameElement.msRequestFullscreen) {
+        // For IE/Edge
         gameElement.msRequestFullscreen();
       }
       setFullScreen(true);
@@ -139,9 +164,7 @@ export const Game = () => {
     }
   };
 
-  if (!location.state && gameDesc) {
-    ({ name, likes, dislikes, like_count, dislike_count } = gameDesc);
-  }
+  
 
   if (gameDesc === null) {
     return <h1>Loading</h1>;
@@ -159,7 +182,11 @@ export const Game = () => {
       <div className="hero game-hero">
         <div className="game-container">
           <div className="game">
-            <Wrapper gameID={gameID} fullScreen={fullScreen} setFullScreen={setFullScreen} />
+            <Wrapper
+              gameID={gameID}
+              fullScreen={fullScreen}
+              setFullScreen={setFullScreen}
+            />
           </div>
           <div className="game-fullscreen-controls">
             <button onClick={toggleFullScreen} className="fullscreen-btn">
@@ -170,30 +197,47 @@ export const Game = () => {
 
         <div className="game-desc">
           <h1 className="game-desc-head">
-            {name}
+            {gameDesc.name}
             <p className="catalog-game-tags">
               {gameDesc.tags != null &&
-                gameDesc.tags.map((tag, key) => (
+                gameDesc.tags.slice(0, 3).map((tag, key) => (
                   <span key={key} className="catalog-game-tag">
                     {tag}
                   </span>
                 ))}
+              {(!moreCat && gameDesc.tags.length > 3) && (
+                <span onClick={()=>{setMoreCat(true)}} className="catalog-tag-rem">+{gameDesc.tags.length - 3} tags</span>
+              )}
+              {
+                moreCat && gameDesc.tags.slice(3).map((tag, key) => (
+                  <span key={key} className="catalog-game-tag">
+                    {tag}
+                  </span>
+                ))
+              }
             </p>
           </h1>
           <div className="game-desc-btns">
             <button onClick={likeGame} className="game-desc-btn">
-              {likes || like_count || "0"} <i className="fa-solid fa-thumbs-up"></i>
+              {gameDesc.like_count || "0"}{" "}
+              <i className="fa-solid fa-thumbs-up"></i>
             </button>
             <button onClick={dislikeGame} className="game-desc-btn">
-              {dislikes || dislike_count || "0"} <i className="fa-solid fa-thumbs-down"></i>
+              {gameDesc.dislike_count || "0"}{" "}
+              <i className="fa-solid fa-thumbs-down"></i>
             </button>
             <button className="game-desc-btn">
               Report <i className="fa-solid fa-flag"></i>
             </button>
 
             <div className="game-desc-nobtn">
-              Rating {(Math.floor((likes || like_count) / ((likes || like_count) + (dislikes || dislike_count)) * 100)) || "0"}%{" "}
-              <i className="fa-solid fa-heart"></i>
+              Rating{" "}
+              {Math.floor(
+                ((gameDesc.like_count) /
+                  ((gameDesc.like_count) + (gameDesc.dislike_count))) *
+                  100
+              ) || "0"}
+              % <i className="fa-solid fa-heart"></i>
             </div>
           </div>
           <hr />
@@ -203,7 +247,12 @@ export const Game = () => {
         <div className="game-desc game-more">
           {gameDesc.tags != null &&
             categoryIDs.map((categoryID, key) => (
-              <Catalog key={key} category_hero={false} category_hero_id={categoryID} />
+              <Catalog
+                key={key}
+                category_hero={false}
+                category_hero_id={categoryID}
+                isIngame={true}
+              />
             ))}
         </div>
       </div>

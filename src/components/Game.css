@@ -29,6 +29,7 @@
 .game-desc-head {
   margin: 0px;
   font-size: 1.7rem;
+  display: flex;
 }
 .game-desc-btns {
   display: flex;
@@ -112,6 +113,8 @@
   display: inline-block;
   margin-left: 20px;
   font-weight: 400;
+  display: flex;
+  align-items: center;
 }
 .catalog-game-tag{
   background-color: #5e5d92;
@@ -158,6 +161,21 @@
   height: 100%;
   width: 100%;
 }
+
+@keyframes bounce {
+  0%, 100%{
+    transform: scale(1,1);
+  }
+  50% {
+    transform: scale(1.4,1.4);
+  }
+}
+
+.bounce {
+  animation: bounce 0.2s;
+}
+
+
 /*
 .leftFull{
   height: 100%;

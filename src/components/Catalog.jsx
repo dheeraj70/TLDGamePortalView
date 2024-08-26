@@ -3,7 +3,7 @@ import { useParams ,useNavigate} from "react-router-dom";
 import { CatalogItem } from "./CatalogItem";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-export const Catalog = ({ category_hero, category_hero_id}) => {
+export const Catalog = ({ category_hero, category_hero_id, isIngame}) => {
 
   
 
@@ -115,7 +115,7 @@ export const Catalog = ({ category_hero, category_hero_id}) => {
         loader={<div className='hero-loading'><img className='hero-loading-img' src="/loading.svg" alt="Loading" /></div>} // Loader for when data is being fetched
         endMessage={<p className='catalog-end-msg'>That's all folks!</p>}
       >
-        <div className="catalog-grid">
+        <div className={isIngame?'catalog-grid-ingame':'catalog-grid'}>
           {catalog_games.map((item, key) => (
             <CatalogItem
               key={key}
@@ -129,7 +129,7 @@ export const Catalog = ({ category_hero, category_hero_id}) => {
           ))}
         </div>
       </InfiniteScroll>:
-      <div className="catalog-grid">
+      <div className={isIngame?'catalog-grid-ingame':'catalog-grid'}>
       {catalog_games.map((item, key) => (
         <CatalogItem
           key={key}

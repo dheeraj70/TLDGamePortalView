@@ -27,9 +27,9 @@ export const Hero = () => {
           
         </div>
       </div>*/}
-      <Catalog category={false} category_hero_id={1}/>
-      <Catalog category={false} category_hero_id={2}/>
-      <Catalog category={false} category_hero_id={3}/>
+      <Catalog category={false} category_hero_id={1} isIngame={false}/>
+      <Catalog category={false} category_hero_id={2} isIngame={false}/>
+      <Catalog category={false} category_hero_id={3} isIngame={false}/>
       
     </div>
   );

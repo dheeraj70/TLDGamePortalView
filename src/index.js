@@ -21,7 +21,7 @@ const router = createBrowserRouter([
       },
       {
         path:'categories/:category_id',
-        element : <Catalog category_hero={true}/>
+        element : <Catalog category_hero={true} isIngame={false}/>
       },
       {
         path: "/game/:gameID",

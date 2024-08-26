@@ -13,23 +13,26 @@ function App() {
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (e) => {
+      console.log("beforeinstallprompt event fired"); // Add this line
       e.preventDefault();
       setDeferredPrompt(e);
-      setShowPrompt(true); // Show prompt when it's deferred
+      setShowPrompt(true); 
     };
-
+  
     window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
-
+  
     window.addEventListener("appinstalled", () => {
+      console.log("App installed"); // Add this line
       setIsInstalled(true);
       setDeferredPrompt(null);
-      setShowPrompt(false); // Hide prompt if the app is installed
+      setShowPrompt(false);
     });
-
+  
     return () => {
       window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
     };
   }, []);
+  
 
   const handleInstallClick = () => {
     if (deferredPrompt) {
