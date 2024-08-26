@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./SidePane.css";
 
-export const SidePane = ({ isInGame, menuFull, setMenuFull ,isInstalled, handleInstallClick}) => {
+export const SidePane = ({ isInGame, menuFull, setMenuFull ,isNotInstalled, handleInstallClick}) => {
   const navigate = useNavigate();
   const [categories, setCategories] = useState(null);
   const sidePanel = useRef(null);
@@ -48,9 +48,9 @@ export const SidePane = ({ isInGame, menuFull, setMenuFull ,isInstalled, handleI
     >
       {menuFull&&<div className="side-pane-down">
         
+        {isNotInstalled && <button onClick={handleInstallClick} className="side-pane-login">Install App</button>}
         <button className="side-pane-login">Login</button>
 
-        {isInstalled && <button onClick={handleInstallClick} className="side-pane-login">Install App</button>}
         </div>}
       <button
         onClick={() => {

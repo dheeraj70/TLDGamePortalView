@@ -3,7 +3,7 @@ import { useNavigate} from "react-router-dom";
 
 import "./Nav.css";
 
-export const Nav = ({menuFull, setMenuFull, isInstalled, handleInstallClick}) => {
+export const Nav = ({menuFull, setMenuFull, isNotInstalled, handleInstallClick}) => {
 
   const navigate = useNavigate();
 
@@ -39,7 +39,7 @@ export const Nav = ({menuFull, setMenuFull, isInstalled, handleInstallClick}) =>
         <button className="nav-notification">
           <i className="fa-solid fa-bell"></i>
         </button>
-        {isInstalled && <button onClick={handleInstallClick} className="nav-install"> Install App </button>}
+        {isNotInstalled && <button onClick={handleInstallClick} className="nav-install"> Install App </button>}
         <button className="nav-login"> Login </button>
         
         <button
