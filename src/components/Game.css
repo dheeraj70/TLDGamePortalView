@@ -35,6 +35,7 @@
 .game-desc-btns {
   display: flex;
   gap: 20px;
+  margin-top: 0.5em;
 }
 .game-desc-btn {
   background-color: #5553b1;
@@ -46,12 +47,11 @@
   cursor: pointer;
   font-family: "Jost", sans-serif;
 }
-.game-desc-nobtn {
-    padding: 5px 10px;
-    font-size: 1rem;
-    color: white;
-    font-family: "Jost", sans-serif;
-  }
+
+.game-desc-rating{
+  margin-top: 0.5em; 
+  font-size: 1rem;
+}
 .game-right-pane {
   top: 120px;
   position: fixed;
@@ -195,7 +195,7 @@
 */
 /* Prompts CSS in Game */
 .sharePromtDiv{
-  height: 100vh;
+  height: 100%;
   width: 100%;
   position: fixed;
   background-color: #0b0b2f8e;
@@ -258,6 +258,7 @@
   cursor: pointer;
 }
 
+
 @media screen and (min-width: 480px) 
     and (max-width: 1024px) {
       /*.leftFull{
@@ -294,9 +295,7 @@
         cursor: pointer;
         font-family: "Jost", sans-serif;
       }
-      .game-desc-nobtn {
-        font-size: 0.7rem;
-      }
+
       .game-desc-btns {
         display: flex;
         gap: 10px;
@@ -304,6 +303,15 @@
       .game-right-pane {
         display: none;
       }
+      .sharePrompt{
+        width:70%;
+
+        left: 15%;
+      }
+      .shareButtons{
+        gap: 3rem;
+      }
+
 }
 
 @media screen and (max-width: 480px) {
@@ -336,9 +344,7 @@
         cursor: pointer;
         font-family: "Jost", sans-serif;
       }
-      .game-desc-nobtn {
-        font-size: 0.7rem;
-      }
+
       .game-desc-btns {
         display: flex;
         gap: 10px;
@@ -359,4 +365,22 @@
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0), 0 6px 20px 0 rgba(0, 0, 0, 0);
         padding: 7px 0px;
       }
+      .sharePrompt{
+        width: 90%;
+
+        left: 5%;
+      }
+      .shareButtons{
+        gap: 1.3rem;
+      }
+}
+
+@media (max-width: 350px) {
+ 
+  .game-desc-btns {
+    display: flex;
+    gap: 20px;
+    margin-top: 0.5em;
+    flex-wrap: wrap;
+  }
 }

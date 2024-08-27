@@ -286,7 +286,7 @@
     }
     .catolog-head{
         padding-left: 20px;
-        margin-top: 0rem;
+        margin-top: 0.7rem;
     }
     .catalog-grid{
         grid-template-columns: 1fr;

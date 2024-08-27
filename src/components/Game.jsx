@@ -310,7 +310,9 @@ export const Game = () => {
               Report <i className="fa-solid fa-flag"></i>
             </button>
 
-            <div className="game-desc-nobtn">
+           
+          </div>
+          <div className="game-desc-rating">
               Rating{" "}
               {Math.floor(
                 (gameDesc.like_count /
@@ -319,7 +321,6 @@ export const Game = () => {
               ) || "0"}
               % <i className="fa-solid fa-heart"></i>
             </div>
-          </div>
           <hr />
           <p>{gameDesc.description}</p>
         </div>
