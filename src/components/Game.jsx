@@ -1,19 +1,21 @@
-import React, { useEffect, useState ,useRef} from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./Game.css";
 import { useParams } from "react-router-dom";
 import { Catalog } from "./Catalog";
 import { Wrapper } from "./Wrapper";
+import { SharePrompt } from "./SharePrompt";
+import { ReportPrompt } from "./ReportPrompt";
 
 export const Game = () => {
-  
-  
   const { gameID } = useParams();
   const [gameDesc, setGameDesc] = useState(null);
   const [fullScreen, setFullScreen] = useState(false);
   const [categoryIDs, setCategoryIDs] = useState([]);
-  const [moreCat, setMoreCat]= useState(false);
+  const [moreCat, setMoreCat] = useState(false);
   const likeBtn = useRef(null);
   const dislikeBtn = useRef(null);
+  const [showSharePrompt, setShowSharePrompt] = useState(false);
+  const [showReportPrompt, setShowReportPrompt] = useState(false);
 
   /* Logic for group loading fix*/
   const [loadingStates, setLoadingStates] = useState([true]);
@@ -31,7 +33,7 @@ export const Game = () => {
     setIsLoading(!allLoaded);
   }, [loadingStates]);
   const handleLoadingStateChange = (index, isLoading) => {
-    setLoadingStates(prevStates => {
+    setLoadingStates((prevStates) => {
       const newStates = [...prevStates];
       newStates[index] = isLoading;
       return newStates;
@@ -50,7 +52,17 @@ export const Game = () => {
     }
   };*/
 
-  const likeGame = async (event) => {
+  const likeGame = async () => {
+    likeBtn.current.classList.add("bounce");
+    setGameDesc((prevDesc) => ({
+      ...prevDesc,
+      like_count: (prevDesc.like_count || 0) + 1,
+    }));
+  
+    setTimeout(() => {
+      likeBtn.current.classList.remove("bounce");
+    }, 200);
+  
     try {
       const res = await fetch(
         `${process.env.REACT_APP_API_URL}/likeGame/${gameID}`,
@@ -61,26 +73,34 @@ export const Game = () => {
           },
         }
       );
-      if (res.ok) {
-        //console.log("liked!");
-        likeBtn.current.classList.add('bounce');
+      if (!res.ok) {
+        console.log("Failed to update like on the server!");
         setGameDesc((prevDesc) => ({
           ...prevDesc,
-          like_count: (prevDesc.like_count || 0) + 1,
+          like_count: (prevDesc.like_count || 0) - 1,
         }));
-        setTimeout(() => {
-          likeBtn.current.classList.remove('bounce');
-        }, 200);
-        //alert("Liked");
-      } else {
-        console.log("failed to update like!");
       }
     } catch (err) {
       console.error(err);
+      setGameDesc((prevDesc) => ({
+        ...prevDesc,
+        like_count: (prevDesc.like_count || 0) - 1,
+      }));
     }
   };
+  
 
-  const dislikeGame = async (event) => {
+  const dislikeGame = async () => {
+    dislikeBtn.current.classList.add("bounce");
+    setGameDesc((prevDesc) => ({
+      ...prevDesc,
+      dislike_count: (prevDesc.dislike_count || 0) + 1,
+    }));
+  
+    setTimeout(() => {
+      dislikeBtn.current.classList.remove("bounce");
+    }, 200);
+  
     try {
       const res = await fetch(
         `${process.env.REACT_APP_API_URL}/dislikeGame/${gameID}`,
@@ -91,24 +111,22 @@ export const Game = () => {
           },
         }
       );
-      if (res.ok) {
-        //console.log("disliked!");
-        dislikeBtn.current.classList.add('bounce');
+      if (!res.ok) {
+        console.log("Failed to update dislike on the server!");
         setGameDesc((prevDesc) => ({
           ...prevDesc,
-          dislike_count: (prevDesc.dislike_count || 0) + 1,
+          dislike_count: (prevDesc.dislike_count || 0) - 1,
         }));
-        setTimeout(() => {
-          dislikeBtn.current.classList.remove('bounce');
-        }, 200);
-        //alert("Disliked");
-      } else {
-        console.log("failed to update dislike!");
       }
     } catch (err) {
       console.error(err);
+      setGameDesc((prevDesc) => ({
+        ...prevDesc,
+        dislike_count: (prevDesc.dislike_count || 0) - 1,
+      }));
     }
   };
+  
 
   const getCatID = async (cat_name) => {
     const res = await fetch(
@@ -143,10 +161,9 @@ export const Game = () => {
   }, [fullScreen]);
 */
   useEffect(() => {
-    
     getAllGameData(gameID);
-    if(gameDesc){
-    setLoadingStates(Array(gameDesc.tags.length).fill(true));
+    if (gameDesc) {
+      setLoadingStates(Array(gameDesc.tags.length).fill(true));
     }
     window.scrollTo(0, 0);
   }, [gameID]);
@@ -189,15 +206,31 @@ export const Game = () => {
     }
   };
 
-  
-
   if (gameDesc === null) {
-    return <div className='hero hero-loading'><img className='hero-loading-img' src="/loading.svg" alt="Loading" /></div>;
+    return (
+      <div className="hero hero-loading">
+        <img className="hero-loading-img" src="/loading.svg" alt="Loading" />
+      </div>
+    );
   }
 
   return (
     <>
       {/*<SidePane isInGame={true} />*/}
+      {showSharePrompt && (
+        <SharePrompt
+          setShowSharePrompt={setShowSharePrompt}
+          showSharePrompt={showSharePrompt}
+          url={window.location.href}
+          title={`Hello, I'm inviting you to play ${gameDesc.name}. I've been having fun!\n`}
+        />
+      )}
+      {showReportPrompt && (
+        <ReportPrompt
+          setShowReportPrompt={setShowReportPrompt}
+          showReportPrompt={showReportPrompt}
+        />
+      )} 
 
       <div className="game-right-pane">
         <p className="game-right-head">Content</p>
@@ -230,16 +263,22 @@ export const Game = () => {
                     {tag}
                   </span>
                 ))}
-              {(!moreCat && gameDesc.tags.length > 3) && (
-                <span onClick={()=>{setMoreCat(true)}} className="catalog-tag-rem">+{gameDesc.tags.length - 3} tags</span>
+              {!moreCat && gameDesc.tags.length > 3 && (
+                <span
+                  onClick={() => {
+                    setMoreCat(true);
+                  }}
+                  className="catalog-tag-rem"
+                >
+                  +{gameDesc.tags.length - 3} tags
+                </span>
               )}
-              {
-                moreCat && gameDesc.tags.slice(3).map((tag, key) => (
+              {moreCat &&
+                gameDesc.tags.slice(3).map((tag, key) => (
                   <span key={key} className="catalog-game-tag">
                     {tag}
                   </span>
-                ))
-              }
+                ))}
             </p>
           </h1>
           <div className="game-desc-btns">
@@ -247,19 +286,35 @@ export const Game = () => {
               {gameDesc.like_count || "0"}{" "}
               <i className="fa-solid fa-thumbs-up"></i>
             </button>
-            <button ref={dislikeBtn} onClick={dislikeGame} className="game-desc-btn">
+            <button
+              ref={dislikeBtn}
+              onClick={dislikeGame}
+              className="game-desc-btn"
+            >
               {gameDesc.dislike_count || "0"}{" "}
               <i className="fa-solid fa-thumbs-down"></i>
             </button>
-            <button className="game-desc-btn">
+            <button
+              onClick={() => {
+                setShowSharePrompt(true);
+                document.body.style.overflow = "hidden";
+              }}
+              className="game-desc-btn"
+            >
+              Share <i class="fa-solid fa-share"></i>
+            </button>
+            <button onClick={() => {
+                setShowReportPrompt(true);
+                document.body.style.overflow = "hidden";
+              }} className="game-desc-btn">
               Report <i className="fa-solid fa-flag"></i>
             </button>
 
             <div className="game-desc-nobtn">
               Rating{" "}
               {Math.floor(
-                ((gameDesc.like_count) /
-                  ((gameDesc.like_count) + (gameDesc.dislike_count))) *
+                (gameDesc.like_count /
+                  (gameDesc.like_count + gameDesc.dislike_count)) *
                   100
               ) || "0"}
               % <i className="fa-solid fa-heart"></i>
@@ -270,15 +325,29 @@ export const Game = () => {
         </div>
 
         <div className="game-desc game-more">
-       { isLoading &&<div style={{width: '100%', textAlign: 'center',marginTop: '30px'}}><img style={{height: '100px'}} className='hero-loading-img' src="/loading.svg" alt="Loading" /></div>}
-        {gameDesc.tags != null &&
+          {isLoading && (
+            <div
+              style={{ width: "100%", textAlign: "center", marginTop: "30px" }}
+            >
+              <img
+                style={{ height: "100px" }}
+                className="hero-loading-img"
+                src="/loading.svg"
+                alt="Loading"
+              />
+            </div>
+          )}
+          {gameDesc.tags != null &&
             categoryIDs.map((categoryID, key) => (
               <Catalog
                 key={key}
                 category_hero={false}
                 category_hero_id={categoryID}
                 isIngame={true}
-                heroLoading={isLoading} onLoadingChange={isLoading => handleLoadingStateChange(key, isLoading)}
+                heroLoading={isLoading}
+                onLoadingChange={(isLoading) =>
+                  handleLoadingStateChange(key, isLoading)
+                }
               />
             ))}
         </div>

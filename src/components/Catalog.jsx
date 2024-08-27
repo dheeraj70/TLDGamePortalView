@@ -68,7 +68,10 @@ export const Catalog = ({ category_hero, category_hero_id, isIngame, onLoadingCh
       })
       .finally(() => {
         setIsLoading(false); 
-        onLoadingChange(false);
+        if(!category_hero){
+          onLoadingChange(false);
+        }
+        
       });
   }, [category]);
 

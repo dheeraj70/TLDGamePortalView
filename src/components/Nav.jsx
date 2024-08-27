@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { useNavigate} from "react-router-dom";
 
 import "./Nav.css";
@@ -7,6 +7,9 @@ export const Nav = ({menuFull, setMenuFull, isNotInstalled, handleInstallClick})
 
   const navigate = useNavigate();
 
+  const [searchQuery, setSearchQuery] = useState('');
+  //const [MobileSearch, setMobileSearch] = useState(false);
+
   const burgerPressed = () => {
     document.body.style.overflow = "hidden";
 
@@ -14,29 +17,36 @@ export const Nav = ({menuFull, setMenuFull, isNotInstalled, handleInstallClick})
   }
 
   return (
+    <div className='nav-bar-container'>
     <nav className="nav-bar">
       <div className="nav-left">
         <img onClick={()=>{navigate('/')}} className="nav-logo" src="/logo.png" alt="TLD games" />
       </div>
       <div className="nav-middle">
-        <input
-          className="nav-search"
-          type="text"
-          name="search"
-          id="search"
-          placeholder="Search"
-        />
-        <i className="fa-solid fa-magnifying-glass nav-search-icon"></i>
+      <form onSubmit={()=>{navigate(`/search/${searchQuery}`)}} className="nav-search-form">
+          <input
+            className="nav-search"
+            type="text"
+            name="search"
+            id="search"
+            placeholder="Search"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <button type="submit" className="nav-search-icon">
+            <i className="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </form>
       </div>
       <div className="nav-right">
-        <button className="nav-notification mobSearchBtn">
+        {/*<button onClick={()=>{setMobileSearch(true)}} className="nav-notification mobSearchBtn">
           {" "}
           <i className="fa-solid fa-magnifying-glass "></i>
-        </button>
-        <button className="nav-notification">
+        </button>*/}
+        <button className="nav-notification nav-profile-btn">
           <i className="fa-solid fa-user"></i>
         </button>
-        <button className="nav-notification">
+        <button onClick={()=>{navigate('/notifications')}} className="nav-notification">
           <i className="fa-solid fa-bell"></i>
         </button>
         {isNotInstalled && <button onClick={handleInstallClick} className="nav-install"> Install App </button>}
@@ -52,5 +62,22 @@ export const Nav = ({menuFull, setMenuFull, isNotInstalled, handleInstallClick})
       </button>
       </div>
     </nav>
+    <div className="nav-mob-search">
+    <form onSubmit={()=>{navigate(`/search/${searchQuery}`)}} className="nav-search-form">
+          <input
+            className="nav-search"
+            type="text"
+            name="search"
+            id="search"
+            placeholder="Search"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <button type="submit" className="nav-search-icon">
+            <i className="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </form>
+      </div>
+    </div>
   );
 };

@@ -8,6 +8,8 @@ import { Hero } from "./components/Hero";
 import { Game } from "./components/Game";
 import { Catalog } from './components/Catalog';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+import { SearchResult } from "./components/SearchResult";
+import Notifications from "./components/Notifications";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +28,14 @@ const router = createBrowserRouter([
       {
         path: "/game/:gameID",
             element: <Game />, 
+      },
+      {
+        path: "/search/:query",
+            element: <SearchResult />
+      },
+      {
+        path: "/notifications",
+            element: <Notifications />
       }
       
     ],

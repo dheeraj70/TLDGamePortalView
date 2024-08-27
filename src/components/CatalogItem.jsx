@@ -8,7 +8,7 @@ export const CatalogItem = ({ gameID, ImgURL, name, tags ,likes, dislikes}) => {
 
   //console.log(backColor);
   return (
-    <button title="Play" onClick={()=>{navigate(`/game/${gameID}`, { state: {name, tags, likes, dislikes, gameID} })}} className="catalog-item">
+    <button title={name} onClick={()=>{navigate(`/game/${gameID}`, { state: {name, tags, likes, dislikes, gameID} })}} className="catalog-item">
       <img
         className="catalog-item-img"
         src={ImgURL}

@@ -1,14 +1,19 @@
 .nav-bar{
     display: flex;
-    top:0px;
     height: 100px;
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
+    width: 100%;
+    z-index: 3;
+}
+.nav-bar-container{
+    top:0px;
     position: fixed;
     width: 100%;
-    background-color: #2c2b57c4;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     z-index: 3;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: #2c2b57c4;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+
 }
 .nav-left{
     width: 100%;
@@ -50,6 +55,21 @@
     color: white;
     
 }
+.nav-search-form{
+    width: 100%;
+    position: relative;
+}
+.nav-search-icon{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    color: rgb(172, 172, 172);
+    height: 100%;
+    padding: 0px 10px;
+    font-size: 100%;
+    background-color: rgba(0,0,0,0);
+    border: none;
+}
 .nav-search:focus{
     border: 2px rgb(155, 208, 255) solid;
 }
@@ -86,20 +106,25 @@
     
 }
 
-.nav-search-icon{
-    position: absolute;
-    right: 20px;
-    color: rgb(116, 116, 116);
-}
+
 .mobSearchBtn{
     display: none;
 }
 .nav-burger{
     display: none;
 }
+.nav-mob-search{
+    display: none;
+}
 
 
 @media screen and (max-width: 480px)  {
+    .nav-profile-btn{
+        display: none;
+    }
+    .nav-bar{
+        height: 80px;
+    }
     
     .mobSearchBtn{
         display: block;
@@ -155,12 +180,35 @@
         border-radius: 10px;
         transition: all 0.3s ease-out;
     }
+    .nav-mob-search{
+        height: 40px;
+        width: 100%;
+        display: flex;
+        padding-bottom: 10px;
+    }
+    .nav-search-form{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    .nav-search{
+        height: 90%;
+        width: 90%;
+        box-sizing: border-box;
+    }
+    .nav-search-icon{
+        
+        right: 25px;
+        
+    }
 
 }
 
 @media screen and (min-width: 480px) 
     and (max-width: 1024px) {
-      
+        .nav-profile-btn{
+            display: none;
+        }
         .mobSearchBtn{
             display: block;
         }

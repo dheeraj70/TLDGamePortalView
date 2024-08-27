@@ -46,10 +46,15 @@ export const SidePane = ({ isInGame, menuFull, setMenuFull ,isNotInstalled, hand
         height: isInGame ? "calc(100% - 60px)" : "",
       }}
     >
+      {menuFull&&<button onClick={()=>{document.body.style.overflow = "";
+        setMenuFull(false);}} className="sidePane-close-btn"><i class="fa-solid fa-xmark"></i></button>}
+
       {menuFull&&<div className="side-pane-down">
         
-        {isNotInstalled && <button onClick={handleInstallClick} className="side-pane-login">Install App</button>}
+        <button className="side-pane-login side-pane-profile">Profile</button>
+
         <button className="side-pane-login">Login</button>
+        {isNotInstalled && <button onClick={handleInstallClick} className="side-pane-login">Install App</button>}
 
         </div>}
       <button
