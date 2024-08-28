@@ -16,6 +16,7 @@ export const Game = () => {
   const dislikeBtn = useRef(null);
   const [showSharePrompt, setShowSharePrompt] = useState(false);
   const [showReportPrompt, setShowReportPrompt] = useState(false);
+  const [fullScreenDenied, setFullScreenDenied] = useState(false);
 
   /* Logic for group loading fix*/
   const [loadingStates, setLoadingStates] = useState([true]);
@@ -196,10 +197,18 @@ export const Game = () => {
       } else if (gameElement.msRequestFullscreen) {
         // For IE/Edge
         gameElement.msRequestFullscreen();
+      }else {
+        // for devices which dont support full screen api
+        console.log('full screen denied')
+        gameElement.classList.add('game-fullscreen-denied');
+        setFullScreenDenied(true);
       }
       setFullScreen(true);
     } else {
-      if (document.exitFullscreen) {
+      if(fullScreenDenied){
+        gameElement.classList.remove('game-fullscreen-denied');
+        setFullScreenDenied(false);
+      }else if (document.exitFullscreen) {
         document.exitFullscreen();
       }
       setFullScreen(false);
@@ -244,6 +253,8 @@ export const Game = () => {
               gameID={gameID}
               fullScreen={fullScreen}
               setFullScreen={setFullScreen}
+              fullScreenDenied ={fullScreenDenied}
+              setFullScreenDenied={setFullScreenDenied}
             />
           </div>
           <div className="game-fullscreen-controls">

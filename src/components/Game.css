@@ -162,6 +162,14 @@
   height: 100%;
   width: 100%;
 }
+.game-fullscreen-denied{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top:0px;
+  left: 0px;
+  z-index: 3;
+}
 
 @keyframes bounce {
   0%, 100%{

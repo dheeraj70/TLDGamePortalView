@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-export const Wrapper = ({ gameID, fullScreen, setFullScreen }) => {
+export const Wrapper = ({ gameID, fullScreen, setFullScreen ,fullScreenDenied, setFullScreenDenied}) => {
   useEffect(() => {
     const iframe = document.querySelector('.iframeInWrapper');
 
@@ -21,7 +21,14 @@ export const Wrapper = ({ gameID, fullScreen, setFullScreen }) => {
     <div style={{ height: '100%', width: '100%' ,borderTopLeftRadius: fullScreen?'0px':'20px',borderTopRightRadius: fullScreen?'0px':'20px', overflow:'hidden'}}>
       {fullScreen && (
         <button
-          onClick={() => {document.exitFullscreen();setFullScreen(!fullScreen)}}
+          onClick={() => {if(fullScreenDenied){
+            document.querySelector(".game").classList.remove('game-fullscreen-denied');
+            setFullScreenDenied(false);
+          }
+          else if(document.exitFullscreen) {
+            document.exitFullscreen();
+          }
+          setFullScreen(false);}}
           className="fullScreenBtn"
         >
           <i className="fa-solid fa-compress"></i>
