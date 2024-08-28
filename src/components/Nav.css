@@ -27,8 +27,10 @@
     width: 100%;
     display: flex;
     align-items: center;
-    min-width: 500px;
+    min-width: 300px;
     position: relative;
+    margin-right: 30px;
+    
 }
 .nav-right{
     width: 100%;
@@ -261,5 +263,26 @@
             background-color: rgb(255, 255, 255);
             border-radius: 10px;
             transition: all 0.3s ease-out;
+        }
+        .nav-mob-search{
+            height: 40px;
+            width: 100%;
+            display: flex;
+            padding-bottom: 10px;
+        }
+        .nav-search-form{
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        .nav-search{
+            height: 90%;
+            width: 90%;
+            box-sizing: border-box;
+        }
+        .nav-search-icon{
+            
+            right: 60px;
+            
         }
 }
