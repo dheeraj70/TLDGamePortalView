@@ -23,6 +23,7 @@ export const Wrapper = ({ gameID, fullScreen, setFullScreen ,fullScreenDenied, s
         <button
           onClick={() => {if(fullScreenDenied){
             document.querySelector(".game").classList.remove('game-fullscreen-denied');
+            document.body.style.overflow = "";
             setFullScreenDenied(false);
           }
           else if(document.exitFullscreen) {

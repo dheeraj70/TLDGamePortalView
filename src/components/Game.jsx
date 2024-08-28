@@ -201,12 +201,14 @@ export const Game = () => {
         // for devices which dont support full screen api
         console.log('full screen denied')
         gameElement.classList.add('game-fullscreen-denied');
+        document.body.style.overflow = "hidden";
         setFullScreenDenied(true);
       }
       setFullScreen(true);
     } else {
       if(fullScreenDenied){
         gameElement.classList.remove('game-fullscreen-denied');
+        document.body.style.overflow = "";
         setFullScreenDenied(false);
       }else if (document.exitFullscreen) {
         document.exitFullscreen();
