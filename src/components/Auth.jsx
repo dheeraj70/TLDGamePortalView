@@ -49,7 +49,7 @@ export const Auth = () => {
     <h2 className='auth-head'>{mode === 'login' ? 'Login' : 'Register'}</h2>
     <form className='auth-form' onSubmit={handleSubmit}>
       <div>
-        <label className='auth-label'>Username</label>
+        <label className='auth-label'>Email</label>
         <input
           type="text"
           className='auth-input'
