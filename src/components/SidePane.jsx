@@ -1,9 +1,17 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import "./SidePane.css";
+import { AuthContext } from "../context/AuthContext";
 
-export const SidePane = ({ isInGame, menuFull, setMenuFull ,isNotInstalled, handleInstallClick}) => {
+export const SidePane = ({
+  isInGame,
+  menuFull,
+  setMenuFull,
+  isNotInstalled,
+  handleInstallClick,
+}) => {
   const navigate = useNavigate();
+  const { user, loading, logout } = useContext(AuthContext);
   const [categories, setCategories] = useState(null);
   const sidePanel = useRef(null);
 
@@ -46,17 +54,64 @@ export const SidePane = ({ isInGame, menuFull, setMenuFull ,isNotInstalled, hand
         height: isInGame ? "calc(100% - 60px)" : "",
       }}
     >
-      {menuFull&&<button onClick={()=>{document.body.style.overflow = "";
-        setMenuFull(false);}} className="sidePane-close-btn"><i class="fa-solid fa-xmark"></i></button>}
+      {menuFull && (
+        <button
+          onClick={() => {
+            document.body.style.overflow = "";
+            setMenuFull(false);
+          }}
+          className="sidePane-close-btn"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      )}
 
-      {menuFull&&<div className="side-pane-down">
-        
-        <button className="side-pane-login side-pane-profile">Profile</button>
+      {menuFull && (
+        <div className="side-pane-down">
+          {user && (
+            <button
+              onClick={() => {
+                navigate("/profile");
+                document.body.style.overflow = "";
+                setMenuFull(false);
+              }}
+              className="side-pane-login side-pane-profile"
+            >
+              Profile
+            </button>
+          )}
+          {user === null ? (
+            <button
+              onClick={() => {
+                navigate("/auth");
+                document.body.style.overflow = "";
+                setMenuFull(false);
+              }}
+              className="side-pane-login"
+            >
+              Login
+            </button>
+          ) : (
+            <button
+              onClick={() => {
+                logout();
+                navigate("/");
+                document.body.style.overflow = "";
+                setMenuFull(false);
+              }}
+              className="side-pane-login"
+            >
+              Logout
+            </button>
+          )}
 
-        <button className="side-pane-login">Login</button>
-        {isNotInstalled && <button onClick={handleInstallClick} className="side-pane-login">Install App</button>}
-
-        </div>}
+          {isNotInstalled && (
+            <button onClick={handleInstallClick} className="side-pane-login">
+              Install App
+            </button>
+          )}
+        </div>
+      )}
       <button
         onClick={() => {
           if (menuFull) {
@@ -77,7 +132,12 @@ export const SidePane = ({ isInGame, menuFull, setMenuFull ,isNotInstalled, hand
         <div className="pane-name">Home</div>
       </button>
       {categories === null ? (
-        <img style={{height: '10%'}} className='hero-loading-img' src="/loading.svg" alt="Loading" />
+        <img
+          style={{ height: "10%" }}
+          className="hero-loading-img"
+          src="/loading.svg"
+          alt="Loading"
+        />
       ) : (
         categories.map((category, key) => {
           return (
@@ -104,7 +164,6 @@ export const SidePane = ({ isInGame, menuFull, setMenuFull ,isNotInstalled, hand
           );
         })
       )}
-      
     </div>
   );
 };

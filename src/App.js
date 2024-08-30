@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { Nav } from "./components/Nav";
 import { SidePane } from "./components/SidePane";
-import { Outlet } from "react-router-dom";
+import { Outlet , useLocation} from "react-router-dom";
 import { Prompt } from "./components/Prompt";
 
 function App() {
@@ -10,6 +10,8 @@ function App() {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [isInstalled, setIsInstalled] = useState(false);
   const [showPrompt, setShowPrompt] = useState(true);
+  const location = useLocation();
+  const isAuthRoute = location.pathname === '/auth';
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (e) => {
@@ -60,13 +62,13 @@ function App() {
       {!isInstalled && deferredPrompt && showPrompt && (
         <Prompt handleInstallClick={handleInstallClick} handleClose={handleClosePrompt} />
       )}
-      <SidePane
+      {true && <SidePane
         isInGame={false}
         menuFull={menuFull}
         setMenuFull={setMenuFull}
         isNotInstalled={!isInstalled && deferredPrompt}
         handleInstallClick={handleInstallClick}
-      />
+      />}
       <Outlet />
     </>
   );

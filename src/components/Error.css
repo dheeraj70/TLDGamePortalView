@@ -1,0 +1,31 @@
+.error-div{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.error-head{
+    font-size: 50px;
+    margin: 10px 0px;
+}
+.error-p{
+    margin: 5px 0px;
+}
+.error-img-div{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.error-img{
+    width: 25%;
+}
+
+@media screen and (max-width: 480px) {
+    .error-img{
+        width: 85%;
+    }
+}

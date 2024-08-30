@@ -1,11 +1,13 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import { useNavigate} from "react-router-dom";
+import { AuthContext } from '../context/AuthContext';
 
 import "./Nav.css";
 
 export const Nav = ({menuFull, setMenuFull, isNotInstalled, handleInstallClick}) => {
 
   const navigate = useNavigate();
+  const { user, loading ,logout} = useContext(AuthContext);
 
   const [searchQuery, setSearchQuery] = useState('');
   //const [MobileSearch, setMobileSearch] = useState(false);
@@ -43,14 +45,14 @@ export const Nav = ({menuFull, setMenuFull, isNotInstalled, handleInstallClick})
           {" "}
           <i className="fa-solid fa-magnifying-glass "></i>
         </button>*/}
-        <button className="nav-notification nav-profile-btn">
+        {user && <button onClick={()=>{navigate('/profile')}} className="nav-notification nav-profile-btn">
           <i className="fa-solid fa-user"></i>
-        </button>
+        </button>}
         <button onClick={()=>{navigate('/notifications')}} className="nav-notification">
           <i className="fa-solid fa-bell"></i>
         </button>
         {isNotInstalled && <button onClick={handleInstallClick} className="nav-install"> Install App </button>}
-        <button className="nav-login"> Login </button>
+        {user===null?<button onClick={()=>{navigate('/auth')}} className="nav-login"> Login </button>:<button onClick={()=>{logout();navigate("/");}} className="nav-login"> Logout </button>}
         
         <button
         className="nav-burger"
