@@ -61,19 +61,19 @@ export const AuthProvider = ({ children }) => {
   };
   
 
-  const register = async (username, password) => {
+  const register = async (username, password, referedBy) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, password ,referedBy}),
         credentials: 'include',
       });
   
       const data = await response.json();
   
       if (response.ok) {
-        setUser(data.user);
+        //setUser(data.user);
 
         return { success: true, message: data.message, user: data.user };
       } else {

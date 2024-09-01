@@ -1,16 +1,20 @@
-import React, { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import './Auth.css';
 
 export const Auth = () => {
   const { user, login, register, loading } = useContext(AuthContext);
-  const [mode, setMode] = useState('login'); // 'login' or 'register'
+  const [params] = useSearchParams();
+  const urlmode = params.get('mode');
+  const refID = params.get('refID');
+  const [mode, setMode] = useState(urlmode==="register"?urlmode:'login'); // 'login' or 'register'
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  
   const navigate = useNavigate();
-
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
     setMessage(''); // Clear previous messages
@@ -26,22 +30,35 @@ export const Auth = () => {
         setMessage(result.message); // Display error message
       }
     } else {
-      result = await register(username, password);
+      const referedBy = refID || sessionStorage.getItem('refID');
+      result = await register(username, password, referedBy);
+      
       if (result.success) {
+        sessionStorage.removeItem('refID');
         setMessage(result.message); // Display success message
         setMode('login'); // Switch to login mode after successful registration
       } else {
         setMessage(result.message); // Display error message
       }
+      
     }
   };
   
   
   
   const handleSocialLogin = (provider) => {
-    // Redirect the user to the authentication URL for the specified provider
-    window.location.href = `${process.env.REACT_APP_API_URL}/${provider}`;
+    const refID = sessionStorage.getItem('refID');
+    const redirectUrl = `${process.env.REACT_APP_API_URL}/${provider}?refID=${refID || ''}`;
+    window.location.href = redirectUrl;
   };
+  
+
+
+  useEffect(() => {
+    if (refID) {
+      sessionStorage.setItem('refID', refID);
+    }
+  }, [refID]);
 
   return (
     <div className="auth-hero">
@@ -112,7 +129,7 @@ export const Auth = () => {
   </div>
   </div>
   </div>
-  <div style={{backgroundImage: "url('game.jpg')"}} className="auth-img">
+  <div style={{backgroundImage: "url('/game.jpg')"}} className="auth-img">
 
   </div>
   </div>

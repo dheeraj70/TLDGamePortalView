@@ -1,0 +1,69 @@
+.app-alert{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: #0b0b2f8e;
+    left: 0px;
+    top: 0px;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.alert-div{
+    width: 45%;
+    min-height: 100px;
+    background-color: white;
+    border-radius: 20px;
+    animation: alertPopUp 0.2s;
+    color: black;
+    position: relative;
+    padding: 20px;
+}
+.alert-close-btn{
+    font-size: 1.7rem;
+    background-color: rgba(0,0,0,0);
+    border: none;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    cursor: pointer;
+}
+
+@keyframes alertPopUp {
+    0%{
+        transform: scale(0);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+
+@media screen and (max-width: 480px)  {
+    
+    .alert-div{
+        width: 80%;
+        
+    }
+    .alert-close-btn{
+     
+        right: 10px;
+        top: 5px;
+ 
+    }
+    
+}
+
+@media screen and (min-width: 480px) 
+    and (max-width: 1024px) {
+        .alert-div{
+            width: 60%;
+            
+        }
+        .alert-close-btn{
+            
+            right: 10px;
+            top: 5px;
+            
+        }
+    }
