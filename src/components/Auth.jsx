@@ -60,6 +60,9 @@ export const Auth = () => {
     }
   }, [refID]);
 
+  if(user){
+    navigate('/');
+  }else{
   return (
     <div className="auth-hero">
     <div className="auth-container">
@@ -133,5 +136,5 @@ export const Auth = () => {
 
   </div>
   </div>
-  );
+  );}
 };
