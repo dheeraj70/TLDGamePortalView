@@ -8,7 +8,7 @@ export const Profile = () => {
   const [ProfileUser, setProfileUser] = useState(null);
   const [ShowAlert, setShowAlert] = useState(false);
   const [refCopied, setRefCopied] = useState(false);
-  const { user } = useContext(AuthContext);
+  const { user ,timedalert} = useContext(AuthContext);
   const navigate = useNavigate();
   const fetchProfile = async () => {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/profile`, {
@@ -32,11 +32,11 @@ export const Profile = () => {
       credentials: "include",
     }).then((res) => {
       if (res.ok) {
-        alert("Changes have been made!");
+        timedalert("Changes have been made!", 'green');
       } else if (res.status === 409) {
-        alert("Username already exists! Use a different username.");
+        timedalert("Username already exists! Use a different username.", 'yellow');
       } else {
-        alert("Error Saving Changes!");
+        timedalert("Error Saving Changes!", 'red');
       }
     });
   };
@@ -64,10 +64,11 @@ export const Profile = () => {
       credentials: "include",
     }).then((res) => {
       if (res.ok) {
-        alert("You'r Profile has been deleted!");
+        timedalert("You'r Profile has been deleted!", 'green');
         window.location.reload();
       } else {
-        alert("Error Deleting your account!");
+        timedalert("Error Deleting your account!", 'red');
+
       }
     });
   };
@@ -155,7 +156,7 @@ export const Profile = () => {
           <button onClick={confirmDelete} className="profile-btn">
             Delete Profile
           </button>
-          <p style={{margin: '0px'}}>//for testing</p>
+          <p style={{margin: '0px'}}>for testing</p>
           <p style={{margin: '0px'}}>User ID :{ProfileUser.id}</p>
           <p style={{margin: '0px'}}>Refer ID :{ProfileUser.refID}</p>
         </div>

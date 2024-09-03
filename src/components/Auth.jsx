@@ -3,31 +3,67 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import './Auth.css';
 
+
 export const Auth = () => {
-  const { user, login, register, loading } = useContext(AuthContext);
+  const { user, login, register, loading , timedalert} = useContext(AuthContext);
   const [params] = useSearchParams();
   const urlmode = params.get('mode');
   const refID = params.get('refID');
   const [mode, setMode] = useState(urlmode==="register"?urlmode:'login'); // 'login' or 'register'
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
+  const [confirmPassword,setConfirmPassword] = useState('');
   
   const navigate = useNavigate();
   
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setMessage(''); // Clear previous messages
+  
+    // Individual checks for password criteria
+    const minLength = password.length >= 8;
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumber = /\d/.test(password);
+    const hasSpecialChar = /[@$!%*?&#]/.test(password);
+  
+    if (mode === 'register') {
+      if (password !== confirmPassword) {
+        timedalert("Passwords do not match!", 'red');
+        return;
+      }
+      
+      // Check each condition and set specific error message
+      if (!minLength) {
+        timedalert("Password must be at least 8 characters long.", 'red');
+        return;
+      }
+      if (!hasUpperCase) {
+        timedalert("Password must include at least one uppercase letter.", 'red');
+        return;
+      }
+      if (!hasLowerCase) {
+        timedalert("Password must include at least one lowercase letter.", 'red');
+        return;
+      }
+      if (!hasNumber) {
+        timedalert("Password must include at least one number.", 'red');
+        return;
+      }
+      if (!hasSpecialChar) {
+        timedalert("Password must include at least one special character.",'red');
+        return;
+      }
+    }
   
     let result;
   
     if (mode === 'login') {
       result = await login(username, password);
       if (result.success) {
-        setMessage(result.message);
+        timedalert("Logged in !",'green');
         navigate('/'); // Redirect to home page after successful login
       } else {
-        setMessage(result.message); // Display error message
+        timedalert(result.message,'red');
       }
     } else {
       const referedBy = refID || sessionStorage.getItem('refID');
@@ -35,14 +71,14 @@ export const Auth = () => {
       
       if (result.success) {
         sessionStorage.removeItem('refID');
-        setMessage(result.message); // Display success message
+        timedalert(result.message,'green');
         setMode('login'); // Switch to login mode after successful registration
       } else {
-        setMessage(result.message); // Display error message
+        timedalert(result.message,'red');
       }
-      
     }
   };
+  
   
   
   
@@ -64,14 +100,16 @@ export const Auth = () => {
     navigate('/');
   }else{
   return (
+    <>
     <div className="auth-hero">
+      
     <div className="auth-container">
     <h2 className='auth-head'>{mode === 'login' ? 'Login' : 'Register'}</h2>
     <form className='auth-form' onSubmit={handleSubmit}>
       <div>
         <label className='auth-label'>Email</label>
         <input
-          type="text"
+          type="email"
           className='auth-input'
           value={username}
           onChange={(e) => setUsername(e.target.value)}
@@ -88,6 +126,16 @@ export const Auth = () => {
           required
         />
       </div>
+      {mode === 'register' && <div>
+        <label className='auth-label'>Confirm Password</label>
+        <input
+          type="password"
+          className='auth-input'
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          required
+        />
+      </div>}
       <button className='auth-submit-btn' type="submit" disabled={loading}>
         {loading ? 'Loading...' : mode === 'login' ? 'Login' : 'Register'}
       </button>
@@ -99,7 +147,6 @@ export const Auth = () => {
           setMode('register');
           setUsername('');
           setPassword('');
-          setMessage('');
         }}>Register Here</button>
         </>
       ) : (
@@ -109,15 +156,12 @@ export const Auth = () => {
           setMode('login');
           setUsername('');
           setPassword('');
-          setMessage('');
         }}>Login</button>
         </>
       )}
     </p>
     </form>
-    
-    {message && <p>{message}</p>}
-    <div>
+        <div>
     <div className="auth-or"> <div className="auth-or-hr"></div> <span>or</span> <div className="auth-or-hr"></div></div>
   <div className="o-auth-btns">
   <button className="o-auth-btn" onClick={() => handleSocialLogin('google')}>
@@ -135,6 +179,6 @@ export const Auth = () => {
   <div style={{backgroundImage: "url('/game.jpg')"}} className="auth-img">
 
   </div>
-  </div>
+  </div></>
   );}
 };

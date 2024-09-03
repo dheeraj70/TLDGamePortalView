@@ -7,7 +7,7 @@ import "./Nav.css";
 export const Nav = ({menuFull, setMenuFull, isNotInstalled, handleInstallClick}) => {
 
   const navigate = useNavigate();
-  const { user, loading ,logout} = useContext(AuthContext);
+  const { user ,logout, timedalert} = useContext(AuthContext);
 
   const [searchQuery, setSearchQuery] = useState('');
   //const [MobileSearch, setMobileSearch] = useState(false);
@@ -52,7 +52,7 @@ export const Nav = ({menuFull, setMenuFull, isNotInstalled, handleInstallClick})
           <i className="fa-solid fa-bell"></i>
         </button>
         {isNotInstalled && <button onClick={handleInstallClick} className="nav-install"> Install App </button>}
-        {user===null?<button onClick={()=>{navigate('/auth')}} className="nav-login"> Login </button>:<button onClick={()=>{logout();navigate("/");}} className="nav-login"> Logout </button>}
+        {user===null?<button onClick={()=>{navigate('/auth')}} className="nav-login"> Login </button>:<button onClick={()=>{logout();navigate("/");timedalert('Logged Out !', 'yellow')}} className="nav-login"> Logout </button>}
         
         <button
         className="nav-burger"
