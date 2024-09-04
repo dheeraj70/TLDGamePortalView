@@ -8,7 +8,7 @@ export const Profile = () => {
   const [ProfileUser, setProfileUser] = useState(null);
   const [ShowAlert, setShowAlert] = useState(false);
   const [refCopied, setRefCopied] = useState(false);
-  const { user ,timedalert} = useContext(AuthContext);
+  const { user ,timedalert, setUser} = useContext(AuthContext);
   const navigate = useNavigate();
   const fetchProfile = async () => {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/profile`, {
@@ -65,7 +65,8 @@ export const Profile = () => {
     }).then((res) => {
       if (res.ok) {
         timedalert("You'r Profile has been deleted!", 'green');
-        window.location.reload();
+        setUser(null);
+        //window.location.reload();
       } else {
         timedalert("Error Deleting your account!", 'red');
 

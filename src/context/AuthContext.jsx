@@ -4,6 +4,7 @@ import { TimedAlert } from '../components/TimedAlert';
 export const AuthContext = createContext({
   user: null,
   loading: true,
+  setUser :() => {},
   login: () => {},
   register: () => {},
   logout: () => {},
@@ -109,7 +110,7 @@ const timedalert = (text, color) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout ,timedalert}}>
+    <AuthContext.Provider value={{ user, loading, login, register, logout ,timedalert, setUser}}>
       {showTA && <TimedAlert text={alertProps.text} color={alertProps.color} />}
       {children}
     </AuthContext.Provider>

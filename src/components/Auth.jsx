@@ -73,6 +73,9 @@ export const Auth = () => {
         sessionStorage.removeItem('refID');
         timedalert(result.message,'green');
         setMode('login'); // Switch to login mode after successful registration
+        setUsername('');
+        setPassword('');
+        setConfirmPassword('');
       } else {
         timedalert(result.message,'red');
       }
@@ -147,6 +150,7 @@ export const Auth = () => {
           setMode('register');
           setUsername('');
           setPassword('');
+          setConfirmPassword('');
         }}>Register Here</button>
         </>
       ) : (
@@ -156,6 +160,7 @@ export const Auth = () => {
           setMode('login');
           setUsername('');
           setPassword('');
+          setConfirmPassword('');
         }}>Login</button>
         </>
       )}
