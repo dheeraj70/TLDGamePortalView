@@ -87,7 +87,7 @@ export const Auth = () => {
   
   const handleSocialLogin = (provider) => {
     const refID = sessionStorage.getItem('refID');
-    const redirectUrl = `${process.env.REACT_APP_API_URL}/${provider}?refID=${refID || ''}`;
+    const redirectUrl = `${process.env.REACT_APP_API_URL}/${provider}?${refID?`refID=${refID}`:''}`;
     sessionStorage.removeItem('refID');
     window.location.href = redirectUrl;
   };
